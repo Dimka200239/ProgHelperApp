@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace ProgHelperApp.Model
         private string Position;
 
         [DisplayName("id")]
+        [Key]
         public Guid id_Employee_F
         {
             get { return id_Employee; }
@@ -97,5 +99,10 @@ namespace ProgHelperApp.Model
             get { return Position; }
             set { Position = value; }
         }
+
+        public List<CardProject> CardProjects { get; set; }
+        public List<CardProjectEmployeeMap> CardProjectEmployeeMaps { get; set; }
+        public List<EmployeeTaskCardProjectMap> EmployeeTaskCardProjectMaps { get; set; }
+        public List<CardComplete> CardCompletes { get; set; }
     }
 }
