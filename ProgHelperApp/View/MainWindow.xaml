@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:ProgHelperApp.View"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="650" MinWidth="1000" Height="650" Width="1000">
-    <Frame Name="MainFrame" Background="White" NavigationUIVisibility="Hidden">
+    <Frame Name="MainFrame"
+           Background="White"
+           NavigationUIVisibility="Hidden">
         
     </Frame>
 </Window>

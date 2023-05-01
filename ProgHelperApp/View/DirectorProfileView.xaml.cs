@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace ProgHelperApp.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для DirectorProfileView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DirectorProfileView : Page
     {
-        public MainWindow()
+        public DirectorProfileView()
         {
             InitializeComponent();
-            var nav = NavigationService.GetNavigationService(MainFrame);
-            MainFrame.Content = new UserLoginAndRegistrationPageView(MainFrame);
         }
     }
 }

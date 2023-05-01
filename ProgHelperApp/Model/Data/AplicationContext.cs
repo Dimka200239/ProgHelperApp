@@ -4,13 +4,13 @@ namespace ProgHelperApp.Model.Data
 {
     public class AplicationContext : DbContext
     {
-        private DbSet<Employee> Employees { get; set; }
-        private DbSet<CardProject> CardProjects { get; set; }
-        private DbSet<Task> Tasks { get; set; }
-        private DbSet<CardProjectEmployeeMap> CardProjectEmployeeMaps { get; set; }
-        private DbSet<CardComplete> CardCompletes { get; set; }
-        private DbSet<EmployeeTaskCardProjectMap> EmployeeTaskCardProjectMaps { get; set; }
-        private DbSet<TaskCardProjectMap> TaskCardProjectMaps { get; set; }
+        public DbSet<Employee> Employees { get; private set; }
+        public DbSet<CardProject> CardProjects { get; private set; }
+        public DbSet<Task> Tasks { get; private set; }
+        public DbSet<CardProjectEmployeeMap> CardProjectEmployeeMaps { get; private set; }
+        public DbSet<CardComplete> CardCompletes { get; private set; }
+        public DbSet<EmployeeTaskCardProjectMap> EmployeeTaskCardProjectMaps { get; private set; }
+        public DbSet<TaskCardProjectMap> TaskCardProjectMaps { get; private set; }
 
         public AplicationContext()
         {

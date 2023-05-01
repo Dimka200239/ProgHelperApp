@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProgHelperApp.Model
+namespace ProgHelperApp.ViewModel
 {
-    public static class DateBaseWorker
+    public class DirectorProfileVM
     {
 
     }

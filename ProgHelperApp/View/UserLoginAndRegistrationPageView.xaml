@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ProgHelperApp.View"
+      xmlns:local="clr-namespace:ProgHelperApp.View" xmlns:components="clr-namespace:ProgHelperApp.Components"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserLoginAndRegistrationPageView">
@@ -149,18 +149,20 @@
                 x:Name="LoginTextBoxInputField"
                 Grid.Row="0"
                 Grid.Column="1"
-                Style="{StaticResource TextBoxStyle}"/>
-            <PasswordBox
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <components:BindablePasswordBox
                 x:Name="PasswordTextBoxInputField"
                 Grid.Row="1"
                 Grid.Column="1"
-                Style="{StaticResource PasswordBoxStyle}"/>
+                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button Template="{DynamicResource RoundedButtonStyle}"
                 x:Name="UserLoginButton"
                 Grid.Row="2"
                 Grid.Column="1"
                 Content="Войти"
-                Style="{StaticResource LoginAndRegButtonStyle}"/>
+                Style="{StaticResource LoginAndRegButtonStyle}"
+                Command="{Binding LoginCommand}"/>
             <Button Template="{DynamicResource RecoverAndRegButtonStyle}"
                 x:Name="RecoverDataTextBlock"
                 Content="Восстановить"
