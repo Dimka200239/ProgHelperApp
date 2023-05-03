@@ -65,7 +65,7 @@ namespace ProgHelperApp.ViewModel
             else
             {
                 //MainFrame.Navigate(new DirectorProfileView());
-                MainFrame.Content = new DirectorProfileView();
+                MainFrame.Content = new DirectorProfileView(MainFrame, result);
             }
         }
     }

@@ -76,7 +76,7 @@ namespace ProgHelperApp.Model
 
         [DisplayName("Phone")]
         [Required(ErrorMessage = "Требуется номер телефона сотрудника")]
-        [RegularExpression(@"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$", ErrorMessage = "Номер телефона должен состоять из 11 цифр и начинаться с кода страны без \"+\"")]
+        [RegularExpression(@"^\+?[1-9][0-9]{7,14}$", ErrorMessage = "Номер телефона должен состоять из 11 цифр и начинаться с кода страны без \"+\"")]
         public string Phone_F
         {
             get { return Phone; }
@@ -85,7 +85,7 @@ namespace ProgHelperApp.Model
 
         [DisplayName("Email")]
         [Required(ErrorMessage = "Требуется email сотрудника")]
-        [RegularExpression(@"^?*@mail.ru$", ErrorMessage = "Email должен иметь формат: _@mail.ru")]
+        [RegularExpression(@"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", ErrorMessage = "Email имеет неверный формат")]
         public string Email_F
         {
             get { return Email; }

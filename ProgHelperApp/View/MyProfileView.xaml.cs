@@ -18,15 +18,14 @@ using System.Windows.Shapes;
 namespace ProgHelperApp.View
 {
     /// <summary>
-    /// Логика взаимодействия для DirectorProfileView.xaml
+    /// Логика взаимодействия для MyProfileView.xaml
     /// </summary>
-    public partial class DirectorProfileView : Page
+    public partial class MyProfileView : Page
     {
-
-        public DirectorProfileView(Frame MainFrame, Employee employee)
+        public MyProfileView(Employee employee)
         {
             InitializeComponent();
-            DataContext = new DirectorProfileVM(MainFrame, employee);
+            DataContext = new MyProfileVM(employee);
         }
     }
 }
