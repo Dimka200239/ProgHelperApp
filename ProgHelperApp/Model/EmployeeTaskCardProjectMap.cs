@@ -12,39 +12,22 @@ namespace ProgHelperApp.Model
 {
     public class EmployeeTaskCardProjectMap
     {
-        private Guid id_Employee;
-        private Guid id_Task;
-        private Guid id_CardProject;
-
-        [DisplayName("id_Employee")]
+        [DisplayName("id_CardProject")]
         [Key]
-        [Column(Order = 1)]
-        public Guid id_Employee_F
-        {
-            get { return id_Employee; }
-            set { id_Employee = value; }
-        }
+        public Guid id_CardProject_F { get; set; }
+        [ForeignKey(nameof(id_CardProject_F))]
+        public CardProject CardProject { get; set; }
 
         [DisplayName("id_Task")]
         [Key]
-        [Column(Order = 2)]
-        public Guid id_Task_F
-        {
-            get { return id_Task; }
-            set { id_Task = value; }
-        }
-
-        [DisplayName("id_CardProject")]
-        [Key]
-        [Column(Order = 3)]
-        public Guid id_CardProject_F
-        {
-            get { return id_CardProject; }
-            set { id_CardProject = value; }
-        }
-
+        public Guid id_Task_F { get; set; }
+        [ForeignKey(nameof(id_Task_F))]
         public Task Task { get; set; }
-        public CardProject CardProject { get; set; }
+
+        [DisplayName("id_Employee")]
+        [Key]
+        public Guid id_Employee_F { get; set; }
+        [ForeignKey(nameof(id_Employee_F))]
         public Employee Employee { get; set; }
     }
 }

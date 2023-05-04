@@ -56,7 +56,7 @@ namespace ProgHelperApp.ViewModel
 
         private void Authorize(object parameter)
         {
-            var result = UserLoginAndRegistrationPageRepository.GetEmployeeByLoginAndPassword(_login, _password);
+            var result = UserLoginAndRegistrationPageRepository.GetEmployeeByLoginAndPassword(Login, Password);
 
             if (result == null)
             {

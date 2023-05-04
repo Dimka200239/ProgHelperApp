@@ -12,49 +12,28 @@ namespace ProgHelperApp.Model
 {
     public class CardComplete
     {
-        private Guid id_Employee;
-        private Guid id_Task;
-        private Guid id_CardProject;
-        private DateTime DateOfEnding;
-
-        [DisplayName("id_Employee")]
+        [DisplayName("id_CardComplete")]
         [Key]
-        [Column(Order = 1)]
-        public Guid id_Employee_F
-        {
-            get { return id_Employee; }
-            set { id_Employee = value; }
-        }
-
-        [DisplayName("id_Task")]
-        [Key]
-        [Column(Order = 2)]
-        public Guid id_Task_F
-        {
-            get { return id_Task; }
-            set { id_Task = value; }
-        }
-
-        [DisplayName("id_CardProject")]
-        [Key]
-        [Column(Order = 3)]
-        public Guid id_CardProject_F
-        {
-            get { return id_CardProject; }
-            set { id_CardProject = value; }
-        }
+        public Guid id_CardComplete_F { get; set; }
 
         [DisplayName("DateOfEnding")]
         [Required(ErrorMessage = "Требуется дата завершения выполнения задачи")]
         [RegularExpression(@"^(0[1-9]|[12][0-9]|3[01])[- /.] (0[1-9]|1[012])[- /.] (19|20)\d\d$", ErrorMessage = "Дата должна иметь вид ДД/ММ/ГГГГ")]
-        public DateTime DateOfEnding_F
-        {
-            get { return DateOfEnding; }
-            set { DateOfEnding = value; }
-        }
+        public DateTime DateOfEnding_F { get; set; }
 
-        public Task Task { get; set; }
+        [DisplayName("id_CardProject")]
+        public Guid id_CardProject_F { get; set; }
+        [ForeignKey(nameof(id_CardProject_F))]
         public CardProject CardProject { get; set; }
+
+        [DisplayName("id_Task")]
+        public Guid id_Task_F { get; set; }
+        [ForeignKey(nameof(id_Task_F))]
+        public Task Task { get; set; }
+
+        [DisplayName("id_Employee")]
+        public Guid id_Employee_F { get; set; }
+        [ForeignKey(nameof(id_Employee_F))]
         public Employee Employee { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using ProgHelperApp.Model.Data;
 namespace ProgHelperApp.Migrations
 {
     [DbContext(typeof(AplicationContext))]
-    [Migration("20230430115317_Initial_Final")]
-    partial class Initial_Final
+    [Migration("20230504211258_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,42 @@ namespace ProgHelperApp.Migrations
 
             modelBuilder.Entity("ProgHelperApp.Model.CardComplete", b =>
                 {
+                    b.Property<Guid>("id_CardComplete_F")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CardProjectid_CardProject_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateOfEnding_F")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("Employeeid_Employee_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Taskid_Task_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("id_CardProject_F")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("id_Employee_F")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("id_Task_F")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("id_CardProject_F")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("id_CardComplete_F");
 
-                    b.Property<DateTime>("DateOfEnding_F")
-                        .HasColumnType("datetime2");
+                    b.HasIndex("CardProjectid_CardProject_F");
 
-                    b.HasKey("id_Employee_F", "id_Task_F", "id_CardProject_F");
+                    b.HasIndex("Employeeid_Employee_F");
+
+                    b.HasIndex("Taskid_Task_F");
 
                     b.HasIndex("id_CardProject_F");
+
+                    b.HasIndex("id_Employee_F");
 
                     b.HasIndex("id_Task_F");
 
@@ -50,16 +71,14 @@ namespace ProgHelperApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateOfBegining_F")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateOfBegining_F")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description_F")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<Guid?>("Employeeid_Employee_F")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("Status_F")
                         .IsRequired()
@@ -70,27 +89,37 @@ namespace ProgHelperApp.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("id_ProjectManager_F")
+                    b.Property<Guid>("id_Employee_F")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id_CardProject_F");
 
-                    b.HasIndex("Employeeid_Employee_F");
+                    b.HasIndex("id_Employee_F");
 
                     b.ToTable("CardProjects");
                 });
 
             modelBuilder.Entity("ProgHelperApp.Model.CardProjectEmployeeMap", b =>
                 {
-                    b.Property<Guid>("id_CardProject_F")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("id_Employee_F")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("id_CardProject_F", "id_Employee_F");
+                    b.Property<Guid>("id_CardProject_F")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("id_Employee_F");
+                    b.Property<Guid?>("CardProjectid_CardProject_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Employeeid_Employee_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("id_Employee_F", "id_CardProject_F");
+
+                    b.HasIndex("CardProjectid_CardProject_F");
+
+                    b.HasIndex("Employeeid_Employee_F");
+
+                    b.HasIndex("id_CardProject_F");
 
                     b.ToTable("CardProjectEmployeeMaps");
                 });
@@ -145,20 +174,35 @@ namespace ProgHelperApp.Migrations
 
             modelBuilder.Entity("ProgHelperApp.Model.EmployeeTaskCardProjectMap", b =>
                 {
-                    b.Property<Guid>("id_Employee_F")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("id_Task_F")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("id_CardProject_F")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("id_Employee_F", "id_Task_F", "id_CardProject_F");
+                    b.Property<Guid>("id_Employee_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CardProjectid_CardProject_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Employeeid_Employee_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Taskid_Task_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("id_Task_F", "id_CardProject_F", "id_Employee_F");
+
+                    b.HasIndex("CardProjectid_CardProject_F");
+
+                    b.HasIndex("Employeeid_Employee_F");
+
+                    b.HasIndex("Taskid_Task_F");
 
                     b.HasIndex("id_CardProject_F");
 
-                    b.HasIndex("id_Task_F");
+                    b.HasIndex("id_Employee_F");
 
                     b.ToTable("EmployeeTaskCardProjectMaps");
                 });
@@ -208,22 +252,34 @@ namespace ProgHelperApp.Migrations
 
             modelBuilder.Entity("ProgHelperApp.Model.CardComplete", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ProgHelperApp.Model.CardProject", null)
                         .WithMany("CardCompletes")
+                        .HasForeignKey("CardProjectid_CardProject_F");
+
+                    b.HasOne("ProgHelperApp.Model.Employee", null)
+                        .WithMany("CardCompletes")
+                        .HasForeignKey("Employeeid_Employee_F");
+
+                    b.HasOne("ProgHelperApp.Model.Task", null)
+                        .WithMany("CardCompletes")
+                        .HasForeignKey("Taskid_Task_F");
+
+                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                        .WithMany()
                         .HasForeignKey("id_CardProject_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProgHelperApp.Model.Employee", "Employee")
-                        .WithMany("CardCompletes")
+                        .WithMany()
                         .HasForeignKey("id_Employee_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProgHelperApp.Model.Task", "Task")
-                        .WithMany("CardCompletes")
+                        .WithMany()
                         .HasForeignKey("id_Task_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -231,42 +287,64 @@ namespace ProgHelperApp.Migrations
                 {
                     b.HasOne("ProgHelperApp.Model.Employee", "Employee")
                         .WithMany("CardProjects")
-                        .HasForeignKey("Employeeid_Employee_F");
+                        .HasForeignKey("id_Employee_F")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProgHelperApp.Model.CardProjectEmployeeMap", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ProgHelperApp.Model.CardProject", null)
                         .WithMany("CardProjectEmployeeMaps")
+                        .HasForeignKey("CardProjectid_CardProject_F");
+
+                    b.HasOne("ProgHelperApp.Model.Employee", null)
+                        .WithMany("CardProjectEmployeeMaps")
+                        .HasForeignKey("Employeeid_Employee_F");
+
+                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                        .WithMany()
                         .HasForeignKey("id_CardProject_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProgHelperApp.Model.Employee", "Employee")
-                        .WithMany("CardProjectEmployeeMaps")
+                        .WithMany()
                         .HasForeignKey("id_Employee_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ProgHelperApp.Model.EmployeeTaskCardProjectMap", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ProgHelperApp.Model.CardProject", null)
                         .WithMany("EmployeeTaskCardProjectMaps")
+                        .HasForeignKey("CardProjectid_CardProject_F");
+
+                    b.HasOne("ProgHelperApp.Model.Employee", null)
+                        .WithMany("EmployeeTaskCardProjectMaps")
+                        .HasForeignKey("Employeeid_Employee_F");
+
+                    b.HasOne("ProgHelperApp.Model.Task", null)
+                        .WithMany("EmployeeTaskCardProjectMaps")
+                        .HasForeignKey("Taskid_Task_F");
+
+                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                        .WithMany()
                         .HasForeignKey("id_CardProject_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProgHelperApp.Model.Employee", "Employee")
-                        .WithMany("EmployeeTaskCardProjectMaps")
+                        .WithMany()
                         .HasForeignKey("id_Employee_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProgHelperApp.Model.Task", "Task")
-                        .WithMany("EmployeeTaskCardProjectMaps")
+                        .WithMany()
                         .HasForeignKey("id_Task_F")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

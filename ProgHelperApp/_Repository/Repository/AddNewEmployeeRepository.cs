@@ -1,5 +1,4 @@
-﻿using ProgHelperApp._Repository.Interface;
-using ProgHelperApp.Model;
+﻿using ProgHelperApp.Model;
 using ProgHelperApp.Model.Data;
 using System;
 using System.Collections.Generic;

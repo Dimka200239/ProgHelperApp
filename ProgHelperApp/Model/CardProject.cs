@@ -13,67 +13,38 @@ namespace ProgHelperApp.Model
 {
     public class CardProject
     {
-        private Guid id_CardProject;
-        private string Title;
-        private string Description;
-        private DateTime DateOfBegining;
-        private string Status;
-        private Guid id_ProjectManager;
-
         [DisplayName("id")]
         [Key]
-        public Guid id_CardProject_F
-        {
-            get { return id_CardProject; }
-            set { id_CardProject = value; }
-        }
+        public Guid id_CardProject_F { get; set; }
 
         [DisplayName("Title")]
         [Required(ErrorMessage = "Требуется заголовок проекта")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Заголовок проекта должен содержать минимум 3 символов")]
-        public string Title_F
-        {
-            get { return Title; }
-            set { Title = value; }
-        }
+        public string Title_F { get; set; }
 
-        [DisplayName("Description")]
+            [DisplayName("Description")]
         [Required(ErrorMessage = "Требуется описание проекта")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Описание проекта должно содержать минимум 3 символов")]
-        public string Description_F
-        {
-            get { return Description; }
-            set { Description = value; }
-        }
+        [StringLength(1000, MinimumLength = 3, ErrorMessage = "Описание проекта должно содержать минимум 3 символов")]
+        public string Description_F { get; set; }
 
         [DisplayName("DateOfBegining")]
         [Required(ErrorMessage = "Требуется дата начала проекта")]
-        [RegularExpression(@"^(0[1-9]|[12][0-9]|3[01])[- /.] (0[1-9]|1[012])[- /.] (19|20)\d\d$", ErrorMessage = "Дата должна иметь вид ДД/ММ/ГГГГ")]
-        public DateTime DateOfBegining_F
-        {
-            get { return DateOfBegining; }
-            set { DateOfBegining = value; }
-        }
+        [RegularExpression(@"^[0-9]{1,2}.[0-9]{1,2}.[0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$", ErrorMessage = "Дата должна иметь вид ДД/ММ/ГГГГ")]
+        public string DateOfBegining_F { get; set; }
 
         [DisplayName("Status")]
         [Required(ErrorMessage = "Требуется статус проекта")]
-        public string Status_F
-        {
-            get { return Status; }
-            set { Status = value; }
-        }
+        public string Status_F { get; set; }
 
-        [DisplayName("id_ProjectManager")]
-        public Guid id_ProjectManager_F
-        {
-            get { return id_ProjectManager; }
-            set { id_ProjectManager = value; }
-        }
+        [DisplayName("id_Employee")]
+        public Guid id_Employee_F { get; set; }
 
-        public Employee Employee { get; set; }
         public List<CardProjectEmployeeMap> CardProjectEmployeeMaps { get; set; }
         public List<TaskCardProjectMap> TaskCardProjectMaps { get; set; }
         public List<EmployeeTaskCardProjectMap> EmployeeTaskCardProjectMaps { get; set; }
         public List<CardComplete> CardCompletes { get; set; }
+
+        [ForeignKey("id_Employee_F")]
+        public Employee Employee { get; set; }
     }
 }
