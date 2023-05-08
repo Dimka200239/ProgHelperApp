@@ -1,8 +1,8 @@
-﻿using ProgHelperApp.Model.Data;
-using ProgHelperApp.Model;
+﻿using ServerWebApiDB.Model.Data;
+using ServerWebApiDB.Model;
 using System.Linq;
 
-namespace ProgHelperApp._Repository.Repository
+namespace ServerWebApiDB._Repository.Repository
 {
     public static class UserLoginAndRegistrationPageRepository
     {

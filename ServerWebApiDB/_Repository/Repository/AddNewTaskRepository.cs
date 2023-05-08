@@ -1,5 +1,5 @@
-﻿using ProgHelperApp.Model.Data;
-using ProgHelperApp.Model;
+﻿using ServerWebApiDB.Model.Data;
+using ServerWebApiDB.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
+using System.Windows.Forms;
 
-namespace ProgHelperApp._Repository.Repository
+namespace ServerWebApiDB._Repository.Repository
 {
     public static class AddNewTaskRepository
     {
@@ -68,7 +69,7 @@ namespace ProgHelperApp._Repository.Repository
             return result;
         }
 
-        public static bool AddNewTask(CardProject cardProject)
+        public static bool AddNewTask(CardProject cardProject, List<ServerWebApiDB.Model.Task> newTasks)
         {
             bool result = false;
 
@@ -77,7 +78,27 @@ namespace ProgHelperApp._Repository.Repository
                 try
                 {
                     db.CardProjects.Add(cardProject);
+
+                    db.CardProjectEmployeeMaps.Add(
+                        new CardProjectEmployeeMap
+                        {
+                            id_CardProject_F = cardProject.id_CardProject_F,
+                            id_Employee_F = cardProject.id_Employee_F
+                        });
+
+                    foreach (var el in newTasks)
+                    {
+                        db.Tasks.Add(el);
+                        db.TaskCardProjectMaps.Add(
+                            new TaskCardProjectMap
+                            {
+                                id_CardProject_F = cardProject.id_CardProject_F,
+                                id_Task_F = el.id_Task_F
+                            });
+                    }
+
                     db.SaveChanges();
+
                     result = true;
                 }
                 catch (Exception ex)

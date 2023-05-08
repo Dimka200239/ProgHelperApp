@@ -111,17 +111,25 @@
                     VerticalAlignment="Center"/>
             </Button>
         </Grid>
-        <Grid
-            x:Name="GridMainFrameProfile"
-            Grid.Column="1">
-            <Frame
-                Name="MainFrameProfile"
-                Background="White"
-                NavigationUIVisibility="Hidden"
-                Content="{Binding CurrentPage}"
-                Opacity="{Binding FrameOpacity}">
+        <ScrollViewer
+            x:Name="ScrollViewerFrame"
+            Grid.Column="1"
+            ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+            ScrollViewer.CanContentScroll="True">
+            <Grid
+                x:Name="GridMainFrameProfile"
+                Grid.Column="1">
+                <Frame 
+                    Name="MainFrameProfile"
+                    Background="White"
+                    NavigationUIVisibility="Hidden"
+                    Content="{Binding CurrentPage}"
+                    Opacity="{Binding FrameOpacity}"
+                    Height="950">
                 
-            </Frame>
-        </Grid>
+                </Frame>
+            
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

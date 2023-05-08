@@ -1,10 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using ProgHelperApp._Repository.Repository;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using ProgHelperApp.Model;
+using ProgHelperApp.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -119,7 +123,7 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
-        private void AddNewEmployee()
+        private async void AddNewEmployee()
         {
             try
             {
@@ -136,23 +140,29 @@ namespace ProgHelperApp.ViewModel
 
                 new Common.DataValidationContext().Validate(newEmployee);
 
-                var result = AddNewEmployeeRepository.AddNewEmployee(newEmployee);
+                using (var client = new HttpClient())
+                {
 
-                if (result == true)
-                {
-                    MessageBox.Show("Успешное добавление");
-                    AddNewName = "";
-                    AddNewSerName = "";
-                    AddNewPatronymic = "";
-                    AddNewLogin = "";
-                    AddNewPassword = "";
-                    AddNewPhone = "";
-                    AddNewEmail = "";
-                    AddNewPosition = "";
-                }
-                else
-                {
-                    MessageBox.Show("При добавлении произошла ошибка...");
+                    client.BaseAddress = new Uri("https://localhost:44392");
+
+                    var response = await client.PostAsJsonAsync($"/api/employee/addNewEmployee", newEmployee);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Успешное добавление");
+                        AddNewName = "";
+                        AddNewSerName = "";
+                        AddNewPatronymic = "";
+                        AddNewLogin = "";
+                        AddNewPassword = "";
+                        AddNewPhone = "";
+                        AddNewEmail = "";
+                        AddNewPosition = "";
+                    }
+                    else
+                    {
+                        MessageBox.Show("При добавлении произошла ошибка...");
+                    }
                 }
             } catch (Exception ex)
             {

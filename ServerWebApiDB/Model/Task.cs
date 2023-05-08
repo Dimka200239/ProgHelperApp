@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProgHelperApp.Model
+namespace ServerWebApiDB.Model
 {
     public class Task
     {

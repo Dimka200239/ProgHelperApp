@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using ProgHelperApp._Repository.Repository;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ProgHelperApp.Common;
 using ProgHelperApp.Model;
 using ProgHelperApp.View;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,18 +55,26 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
-        private void Authorize(object parameter)
+        private async void Authorize(object parameter)
         {
-            var result = UserLoginAndRegistrationPageRepository.GetEmployeeByLoginAndPassword(Login, Password);
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44392");
 
-            if (result == null)
-            {
-                MessageBox.Show("Неправильный логин или пароль");
-            }
-            else
-            {
-                //MainFrame.Navigate(new DirectorProfileView());
-                MainFrame.Content = new DirectorProfileView(MainFrame, result);
+                var response = await client.GetAsync($"/api/employee/{Login}/{Password}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<Employee>(responseContent);
+
+                    //MainFrame.Navigate(new DirectorProfileView());
+                    MainFrame.Content = new DirectorProfileView(MainFrame, result);
+                }
+                else
+                {
+                    MessageBox.Show("Неправильный логин или пароль");
+                }
             }
         }
     }

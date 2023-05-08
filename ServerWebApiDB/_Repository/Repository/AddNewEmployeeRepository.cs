@@ -1,12 +1,12 @@
-﻿using ProgHelperApp.Model;
-using ProgHelperApp.Model.Data;
+﻿using ServerWebApiDB.Model;
+using ServerWebApiDB.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProgHelperApp._Repository.Repository
+namespace ServerWebApiDB._Repository.Repository
 {
     public static class AddNewEmployeeRepository
     {

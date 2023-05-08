@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProgHelperApp.Model.Data;
+using ServerWebApiDB.Model.Data;
 
-namespace ProgHelperApp.Migrations
+namespace ServerWebApiDB.Migrations
 {
     [DbContext(typeof(AplicationContext))]
     partial class AplicationContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace ProgHelperApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardComplete", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardComplete", b =>
                 {
                     b.Property<Guid>("id_CardComplete_F")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("CardCompletes");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardProject", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardProject", b =>
                 {
                     b.Property<Guid>("id_CardProject_F")
                         .ValueGeneratedOnAdd()
@@ -82,7 +82,7 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("CardProjects");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardProjectEmployeeMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardProjectEmployeeMap", b =>
                 {
                     b.Property<Guid>("id_Employee_F")
                         .HasColumnType("uniqueidentifier");
@@ -97,7 +97,7 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("CardProjectEmployeeMaps");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.Employee", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.Employee", b =>
                 {
                     b.Property<Guid>("id_Employee_F")
                         .ValueGeneratedOnAdd()
@@ -145,7 +145,7 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.EmployeeTaskCardProjectMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.EmployeeTaskCardProjectMap", b =>
                 {
                     b.Property<Guid>("id_Task_F")
                         .HasColumnType("uniqueidentifier");
@@ -156,28 +156,34 @@ namespace ProgHelperApp.Migrations
                     b.Property<Guid>("id_Employee_F")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("id_Task_F", "id_CardProject_F", "id_Employee_F");
+                    b.Property<Guid>("id_Forwarded_Employee_F")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("id_Task_F", "id_CardProject_F", "id_Employee_F", "id_Forwarded_Employee_F");
 
                     b.HasIndex("id_CardProject_F");
 
                     b.HasIndex("id_Employee_F");
 
+                    b.HasIndex("id_Forwarded_Employee_F");
+
                     b.ToTable("EmployeeTaskCardProjectMaps");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.Task", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.Task", b =>
                 {
                     b.Property<Guid>("id_Task_F")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Deadline_F")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Deadline_F")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description_F")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("Status_F")
                         .IsRequired()
@@ -193,7 +199,7 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.TaskCardProjectMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.TaskCardProjectMap", b =>
                 {
                     b.Property<Guid>("id_Task_F")
                         .HasColumnType("uniqueidentifier");
@@ -208,81 +214,87 @@ namespace ProgHelperApp.Migrations
                     b.ToTable("TaskCardProjectMaps");
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardComplete", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardComplete", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ServerWebApiDB.Model.CardProject", "CardProject")
                         .WithMany("CardCompletes")
                         .HasForeignKey("id_CardProject_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Employee", "Employee")
+                    b.HasOne("ServerWebApiDB.Model.Employee", "Employee")
                         .WithMany("CardCompletes")
                         .HasForeignKey("id_Employee_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Task", "Task")
+                    b.HasOne("ServerWebApiDB.Model.Task", "Task")
                         .WithMany("CardCompletes")
                         .HasForeignKey("id_Task_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardProject", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardProject", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.Employee", "Employee")
+                    b.HasOne("ServerWebApiDB.Model.Employee", "Employee")
                         .WithMany("CardProjects")
                         .HasForeignKey("id_Employee_F")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.CardProjectEmployeeMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.CardProjectEmployeeMap", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ServerWebApiDB.Model.CardProject", "CardProject")
                         .WithMany("CardProjectEmployeeMaps")
                         .HasForeignKey("id_CardProject_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Employee", "Employee")
+                    b.HasOne("ServerWebApiDB.Model.Employee", "Employee")
                         .WithMany("CardProjectEmployeeMaps")
                         .HasForeignKey("id_Employee_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.EmployeeTaskCardProjectMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.EmployeeTaskCardProjectMap", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ServerWebApiDB.Model.CardProject", "CardProject")
                         .WithMany("EmployeeTaskCardProjectMaps")
                         .HasForeignKey("id_CardProject_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Employee", "Employee")
-                        .WithMany("EmployeeTaskCardProjectMaps")
+                    b.HasOne("ServerWebApiDB.Model.Employee", "Forwarded_Employee")
+                        .WithMany()
                         .HasForeignKey("id_Employee_F")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServerWebApiDB.Model.Employee", "Employee")
+                        .WithMany("EmployeeTaskCardProjectMaps")
+                        .HasForeignKey("id_Forwarded_Employee_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Task", "Task")
+                    b.HasOne("ServerWebApiDB.Model.Task", "Task")
                         .WithMany("EmployeeTaskCardProjectMaps")
                         .HasForeignKey("id_Task_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProgHelperApp.Model.TaskCardProjectMap", b =>
+            modelBuilder.Entity("ServerWebApiDB.Model.TaskCardProjectMap", b =>
                 {
-                    b.HasOne("ProgHelperApp.Model.CardProject", "CardProject")
+                    b.HasOne("ServerWebApiDB.Model.CardProject", "CardProject")
                         .WithMany("TaskCardProjectMaps")
                         .HasForeignKey("id_CardProject_F")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProgHelperApp.Model.Task", "Task")
+                    b.HasOne("ServerWebApiDB.Model.Task", "Task")
                         .WithMany("TaskCardProjectMaps")
                         .HasForeignKey("id_Task_F")
                         .OnDelete(DeleteBehavior.Restrict)

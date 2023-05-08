@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json.Linq;
-using ProgHelperApp._Repository.Repository;
 using ProgHelperApp.Model;
 using System;
 using System.Collections.Generic;
@@ -26,6 +25,7 @@ namespace ProgHelperApp.ViewModel
         public ICommand FindEmployeeCommand { get; }
         public ICommand ChooseEmployeeCommand { get; }
         public ICommand AddNewTaskCommand { get; }
+        public ICommand AddNewTaskAddCommand { get; }
         public ObservableCollection<Button> TextBlocks { get; set; }
 
         private string _findFieldTaskManager;
@@ -35,14 +35,27 @@ namespace ProgHelperApp.ViewModel
         private string _addNewTaskDescription;
         private string _addNewTaskTitle;
 
+        public ObservableCollection<Button> TextBlocksTask { get; set; }
+        private string _titleTask;
+        private string _descriptionTask;
+        private string _daysTask;
+        private string _statusTask;
+
+        private List<ProgHelperApp.Model.Task> newTasks = new List<ProgHelperApp.Model.Task>();
+
         public AddNewTaskVM()
         {
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             TextBlocks = new ObservableCollection<Button>();
+            TextBlocksTask = new ObservableCollection<Button>();
+            TextBlocksTask.Clear();
+            newTasks.Clear();
             ChooseEmployeeCommand = new RelayCommand(ChooseEmployee);
             AddNewTaskCommand = new RelayCommand(AddNewTask);
+            AddNewTaskAddCommand = new RelayCommand(AddNewTaskAdd);
 
             AddNewTaskStatus = "Открыта";
+            StatusTask = "Открыта";
             AddNewTaskDateOfBegining = DateTime.UtcNow.ToString();
         }
 
@@ -106,11 +119,51 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
+        public string TitleTask
+        {
+            get { return _titleTask; }
+            set
+            {
+                _titleTask = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TitleTask)));
+            }
+        }
+
+        public string DescriptionTask
+        {
+            get { return _descriptionTask; }
+            set
+            {
+                _descriptionTask = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DescriptionTask)));
+            }
+        }
+
+        public string DaysTask
+        {
+            get { return _daysTask; }
+            set
+            {
+                _daysTask = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DaysTask)));
+            }
+        }
+
+        public string StatusTask
+        {
+            get { return _statusTask; }
+            set
+            {
+                _statusTask = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusTask)));
+            }
+        }
+
         private void FindEmployee()
         {
             TextBlocks.Clear();
 
-            var result = AddNewTaskRepository.FindEmployee(FindFieldTaskManager);
+            List<Employee> result = null;//AddNewTaskRepository.FindEmployee(FindFieldTaskManager);
 
             if (result != null)
             {
@@ -140,11 +193,47 @@ namespace ProgHelperApp.ViewModel
             AddNewTaskIdManager = btn.Content.ToString();
         }
 
+        private void AddNewTaskAdd()
+        {
+            try
+            {
+                var newTask = new ProgHelperApp.Model.Task();
+                newTask.id_Task_F = Guid.NewGuid();
+                newTask.Title_F = TitleTask;
+                newTask.Description_F = DescriptionTask;
+                newTask.Deadline_F = DateTime.UtcNow.AddDays(int.Parse(DaysTask)).ToString();
+                newTask.Status_F = StatusTask;
+
+                new Common.DataValidationContext().Validate(newTask);
+
+                var newButton = new Button
+                {
+                    Content = newTask.Title_F,
+                };
+
+                TextBlocksTask.Add(newButton);
+
+                newTasks.Add(newTask);
+
+                TitleTask = "";
+                DescriptionTask = "";
+                DaysTask = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void AddNewTask()
         {
             try
             {
-                var managerId = _addNewTaskIdManager.Split(':')[1];
+                var managerId = "";
+                if (_addNewTaskIdManager != "" && _addNewTaskIdManager != null)
+                {
+                    managerId = _addNewTaskIdManager.Split(':')[1];
+                }
 
                 var cardProject = new CardProject();
                 cardProject.id_CardProject_F = Guid.NewGuid();
@@ -152,11 +241,14 @@ namespace ProgHelperApp.ViewModel
                 cardProject.Description_F = AddNewTaskDescription;
                 cardProject.DateOfBegining_F = AddNewTaskDateOfBegining;
                 cardProject.Status_F = AddNewTaskStatus;
-                cardProject.id_Employee_F = new Guid(managerId);
+                if (managerId != "")
+                {
+                    cardProject.id_Employee_F = new Guid(managerId);
+                }
 
                 new Common.DataValidationContext().Validate(cardProject);
 
-                var result = AddNewTaskRepository.AddNewTask(cardProject);
+                var result = true;//AddNewTaskRepository.AddNewTask(cardProject, newTasks);
 
                 if (result == true)
                 {
@@ -167,6 +259,7 @@ namespace ProgHelperApp.ViewModel
                     AddNewTaskStatus = "";
                     AddNewTaskIdManager = "";
                     TextBlocks.Clear();
+                    TextBlocksTask.Clear();
                 }
                 else
                 {
