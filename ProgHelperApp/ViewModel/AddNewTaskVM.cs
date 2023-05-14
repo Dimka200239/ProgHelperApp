@@ -1,19 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using ProgHelperApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ProgHelperApp.ViewModel
@@ -159,25 +155,40 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
-        private void FindEmployee()
+        private async void FindEmployee()
         {
             TextBlocks.Clear();
 
-            List<Employee> result = null;//AddNewTaskRepository.FindEmployee(FindFieldTaskManager);
-
-            if (result != null)
+            using (var client = new HttpClient())
             {
-                foreach (Employee employee in result)
+                client.BaseAddress = new Uri("https://localhost:44392");
+
+                var response = await client.GetAsync($"/api/employee/FindController/{FindFieldTaskManager}");
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var newButton = new Button
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<List<Employee>>(responseContent);
+
+                    if (result != null)
                     {
-                        Content = employee.Name_F + " " + employee.SerName_F + " " + employee.Patronymic_F + ":" + employee.id_Employee_F,
-                        Command = ChooseEmployeeCommand
-                    };
+                        foreach (Employee employee in result)
+                        {
+                            var newButton = new Button
+                            {
+                                Content = employee.Name_F + " " + employee.SerName_F + " " + employee.Patronymic_F + ":" + employee.id_Employee_F,
+                                Command = ChooseEmployeeCommand
+                            };
 
-                    newButton.Click += Click_Button;
+                            newButton.Click += Click_Button;
 
-                    TextBlocks.Add(newButton);
+                            TextBlocks.Add(newButton);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при получении данных");
                 }
             }
         }
@@ -225,7 +236,7 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
-        private void AddNewTask()
+        private async void AddNewTask()
         {
             try
             {
@@ -248,23 +259,31 @@ namespace ProgHelperApp.ViewModel
 
                 new Common.DataValidationContext().Validate(cardProject);
 
-                var result = true;//AddNewTaskRepository.AddNewTask(cardProject, newTasks);
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:44392");
 
-                if (result == true)
-                {
-                    MessageBox.Show("Успешное добавление");
-                    AddNewTaskTitle = "";
-                    AddNewTaskDescription = "";
-                    AddNewTaskDateOfBegining = "";
-                    AddNewTaskStatus = "";
-                    AddNewTaskIdManager = "";
-                    TextBlocks.Clear();
-                    TextBlocksTask.Clear();
+                    var firstResponse = await client.PostAsJsonAsync($"/api/employee/addNewProject", cardProject);
+                    var secondResponse = await client.PostAsJsonAsync($"/api/employee/addNewTask/{cardProject.id_CardProject_F}", newTasks);
+
+                    if (firstResponse.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Успешное добавление");
+                        AddNewTaskTitle = "";
+                        AddNewTaskDescription = "";
+                        AddNewTaskDateOfBegining = "";
+                        AddNewTaskStatus = "";
+                        AddNewTaskIdManager = "";
+                        TextBlocks.Clear();
+                        TextBlocksTask.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("При добавлении произошла ошибка...");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("При добавлении произошла ошибка...");
-                }
+
+                //AddNewTaskRepository.AddNewTask(cardProject, newTasks);
             }
             catch (Exception ex)
             {
@@ -272,4 +291,6 @@ namespace ProgHelperApp.ViewModel
             }
         }
     }
+
+
 }
