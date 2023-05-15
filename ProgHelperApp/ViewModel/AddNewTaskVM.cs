@@ -44,8 +44,6 @@ namespace ProgHelperApp.ViewModel
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             TextBlocks = new ObservableCollection<Button>();
             TextBlocksTask = new ObservableCollection<Button>();
-            TextBlocksTask.Clear();
-            newTasks.Clear();
             ChooseEmployeeCommand = new RelayCommand(ChooseEmployee);
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             AddNewTaskAddCommand = new RelayCommand(AddNewTaskAdd);
@@ -53,6 +51,10 @@ namespace ProgHelperApp.ViewModel
             AddNewTaskStatus = "Открыта";
             StatusTask = "Открыта";
             AddNewTaskDateOfBegining = DateTime.UtcNow.ToString();
+
+            TextBlocks.Clear();
+            TextBlocksTask.Clear();
+            newTasks.Clear();
         }
 
         public string FindFieldTaskManager

@@ -1,17 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ServerWebApiDB.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ServerWebApiDB.Model.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
-using Newtonsoft.Json;
-using System.Windows.Forms;
-using System.Runtime.ConstrainedExecution;
 using System.Collections.Generic;
-using ProgHelperApp.Model;
-using Newtonsoft.Json.Linq;
 
 namespace ServerWebApiDB.Controllers
 {
@@ -19,9 +12,6 @@ namespace ServerWebApiDB.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private Guid _cardProjectId { get; set; }
-        private Guid _taskId { get; set; }
-
         [HttpGet("{login}/{password}")]
         public async Task<ActionResult<Model.Employee>> Get(string login, string password)
         {

@@ -215,6 +215,7 @@
     <Compile Include="ViewModel\AddNewEmployeeVM.cs" />
     <Compile Include="ViewModel\AddNewTaskVM.cs" />
     <Compile Include="ViewModel\DirectorProfileVM.cs" />
+    <Compile Include="ViewModel\FindAndEditProjectVM.cs" />
     <Compile Include="ViewModel\MyProfileVM.cs" />
     <Compile Include="ViewModel\UserLoginAndRegistrationPageVM.cs" />
     <Compile Include="View\AddNewEmployeeView.xaml.cs">
@@ -225,6 +226,9 @@
     </Compile>
     <Compile Include="View\DirectorProfileView.xaml.cs">
       <DependentUpon>DirectorProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FindAndEditProjectView.xaml.cs">
+      <DependentUpon>FindAndEditProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MyProfileView.xaml.cs">
       <DependentUpon>MyProfileView.xaml</DependentUpon>
@@ -245,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DirectorProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FindAndEditProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -327,7 +335,12 @@
   <ItemGroup>
     <Resource Include="View\Img\AddNewTask.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\FindAndEditProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Img\FindAndEditProject.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

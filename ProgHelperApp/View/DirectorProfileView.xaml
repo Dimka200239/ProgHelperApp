@@ -110,6 +110,21 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
+            <Button
+                x:Name="FindAndEditProjectBorder"
+                Grid.Row="8"
+                BorderThickness="1"
+                Style="{StaticResource BoardInteraction}"
+                Command="{Binding FindAndEditProjectCommand}">
+                <Image
+                    x:Name="FindAndEditProjectImg"
+                    Source="/View/Img/FindAndEditProject.png"
+                    Grid.Row="8"
+                    Width="21px"
+                    Height="21px"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </Button>
         </Grid>
         <ScrollViewer
             x:Name="ScrollViewerFrame"
