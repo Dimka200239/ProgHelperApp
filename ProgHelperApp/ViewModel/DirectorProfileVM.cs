@@ -23,6 +23,7 @@ namespace ProgHelperApp.ViewModel
         private Page AddNewEmployee;
         private Page AddNewTask;
         private Page FindAndEditProject;
+        private Page FindAndEditTask;
 
         private Page _currentPage;
         public Page CurrentPage
@@ -51,6 +52,7 @@ namespace ProgHelperApp.ViewModel
         public ICommand AddNewEmployeeCommand { get; }
         public ICommand AddNewTaskCommand { get; }
         public ICommand FindAndEditProjectCommand { get; }
+        public ICommand FindAndEditTaskCommand { get; }
 
         public DirectorProfileVM(Frame MainFrame, Employee employee)
         {
@@ -58,6 +60,7 @@ namespace ProgHelperApp.ViewModel
             AddNewEmployee = new AddNewEmployeeView();
             AddNewTask = new AddNewTaskView();
             FindAndEditProject = new FindAndEditProjectView();
+            FindAndEditTask = new FindAndEditTaskView();
 
             FrameOpacity = 1;
             CurrentPage = null;
@@ -68,6 +71,7 @@ namespace ProgHelperApp.ViewModel
             AddNewEmployeeCommand = new RelayCommand(GoToAddNewEmployee);
             AddNewTaskCommand = new RelayCommand(GoToAddNewTask);
             FindAndEditProjectCommand = new RelayCommand(GoToFindAndEditProject);
+            FindAndEditTaskCommand = new RelayCommand(GoToFindAndEditTask);
         }
 
         private void GoToExitFromProfile()
@@ -100,6 +104,11 @@ namespace ProgHelperApp.ViewModel
         private void GoToFindAndEditProject()
         {
             SlowOpacity(FindAndEditProject);
+        }
+
+        private void GoToFindAndEditTask()
+        {
+            SlowOpacity(FindAndEditTask);
         }
 
         private async void SlowOpacity(Page page)

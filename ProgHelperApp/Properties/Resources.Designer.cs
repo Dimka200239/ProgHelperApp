@@ -113,6 +113,16 @@ namespace ProgHelperApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FindAndEditTask {
+            get {
+                object obj = ResourceManager.GetObject("FindAndEditTask", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MyProfile {
             get {
                 object obj = ResourceManager.GetObject("MyProfile", resourceCulture);
