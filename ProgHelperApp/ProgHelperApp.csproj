@@ -234,6 +234,9 @@
     <Compile Include="View\FindAndEditTaskView.xaml.cs">
       <DependentUpon>FindAndEditTaskView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\FindCompletedProjectView.xaml.cs">
+      <DependentUpon>FindCompletedProjectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MyProfileView.xaml.cs">
       <DependentUpon>MyProfileView.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FindAndEditTaskView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FindCompletedProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -354,6 +361,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="View\Img\FindAndEditTask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckCompletedProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Img\CheckCompletedProject.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
