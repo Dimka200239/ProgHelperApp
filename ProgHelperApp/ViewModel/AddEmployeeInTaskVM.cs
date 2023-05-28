@@ -370,12 +370,12 @@ namespace ProgHelperApp.ViewModel
 
                     var response = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeTaskCardProject", employeeTaskCardProject);
 
-                    //var employeeCardProject = new Model.CardProjectEmployeeMap();
-                    //employeeCardProject.id_CardProject_F = new Guid(FindProjectTaskId);
-                    //employeeCardProject.id_Employee_F = new Guid(infoProject[0]);
-                    //var secondResponse = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeCardProject", employeeCardProject);
+                    var employeeCardProject = new Model.CardProjectEmployeeMap();
+                    employeeCardProject.id_CardProject_F = new Guid(FindProjectTaskId);
+                    employeeCardProject.id_Employee_F = new Guid(infoProject[0]);
+                    var secondResponse = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeCardProject", employeeCardProject);
 
-                    if (response.IsSuccessStatusCode) // && secondResponse.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"{infoProject[1]} {infoProject[2]} {infoProject[3]} успешно приклеплен к задаче!");
 
@@ -390,10 +390,6 @@ namespace ProgHelperApp.ViewModel
                         newButton.MouseDoubleClick += MouseDoubleClick_Button_Employee;
 
                         TextBlocksEmployee.Add(newButton);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ошибка при обновлении данных");
                     }
                 }
             }

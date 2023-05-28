@@ -17,8 +17,7 @@ namespace ServerWebApiDB.Model
 
         [DisplayName("DateOfEnding")]
         [Required(ErrorMessage = "Требуется дата завершения выполнения задачи")]
-        [RegularExpression(@"^(0[1-9]|[12][0-9]|3[01])[- /.] (0[1-9]|1[012])[- /.] (19|20)\d\d$", ErrorMessage = "Дата должна иметь вид ДД/ММ/ГГГГ")]
-        public DateTime DateOfEnding_F { get; set; }
+        public string DateOfEnding_F { get; set; }
 
         [DisplayName("id_CardProject")]
         public Guid id_CardProject_F { get; set; }

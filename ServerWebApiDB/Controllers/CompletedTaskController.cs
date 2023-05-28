@@ -40,7 +40,7 @@ namespace ServerWebApiDB.Controllers
                 {
                     var editTask = await db.Tasks.FirstOrDefaultAsync(p => p.id_Task_F == new Guid(FindTaskId));
 
-                    editTask.Status_F = "Закрыт";
+                    editTask.Status_F = "Закрыта";
 
                     await db.SaveChangesAsync();
 

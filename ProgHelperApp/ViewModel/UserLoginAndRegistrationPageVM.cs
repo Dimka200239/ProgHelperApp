@@ -81,7 +81,7 @@ namespace ProgHelperApp.ViewModel
                              result.Position_F == "Исполнитель 2-ой категории" ||
                              result.Position_F == "Исполнитель 3-ой категории")
                     {
-
+                        MainFrame.Content = new EmployeeProfileView(MainFrame, result);
                     }
                 }
                 else

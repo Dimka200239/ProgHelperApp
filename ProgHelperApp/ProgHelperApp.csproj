@@ -212,17 +212,22 @@
     <Compile Include="Model\EmployeeTaskCardProjectMap.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\TaskCardProjectMap.cs" />
+    <Compile Include="ViewModel\AddCardCompleteVM.cs" />
     <Compile Include="ViewModel\AddEmployeeInTaskVM.cs" />
     <Compile Include="ViewModel\AddNewEmployeeVM.cs" />
     <Compile Include="ViewModel\AddNewTaskVM.cs" />
     <Compile Include="ViewModel\ControllerProfileVM.cs" />
     <Compile Include="ViewModel\DirectorProfileVM.cs" />
+    <Compile Include="ViewModel\EmployeeProfileVM.cs" />
     <Compile Include="ViewModel\FindAndEditProjectVM.cs" />
     <Compile Include="ViewModel\FindAndEditTaskVM.cs" />
     <Compile Include="ViewModel\FindCompletedProjectVM.cs" />
     <Compile Include="ViewModel\FindCompletedTaskVM.cs" />
     <Compile Include="ViewModel\MyProfileVM.cs" />
     <Compile Include="ViewModel\UserLoginAndRegistrationPageVM.cs" />
+    <Compile Include="View\AddCardCompleteView.xaml.cs">
+      <DependentUpon>AddCardCompleteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddEmployeeInTaskView.xaml.cs">
       <DependentUpon>AddEmployeeInTaskView.xaml</DependentUpon>
     </Compile>
@@ -237,6 +242,9 @@
     </Compile>
     <Compile Include="View\DirectorProfileView.xaml.cs">
       <DependentUpon>DirectorProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeProfileView.xaml.cs">
+      <DependentUpon>EmployeeProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FindAndEditProjectView.xaml.cs">
       <DependentUpon>FindAndEditProjectView.xaml</DependentUpon>
@@ -260,6 +268,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AddCardCompleteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddEmployeeInTaskView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DirectorProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EmployeeProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -398,6 +414,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="View\Img\addEmployeeInTask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addCardComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Img\addCardComplete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

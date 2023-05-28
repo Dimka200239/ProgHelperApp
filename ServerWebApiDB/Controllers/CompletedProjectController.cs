@@ -33,16 +33,16 @@ namespace ServerWebApiDB.Controllers
             return result;
         }
 
-        [HttpPut("UpdateCardProjectStatus/{FindProjectTaskId}")]
-        public async Task<ActionResult<bool>> Put(string FindProjectTaskId)
+        [HttpGet("UpdateCardProjectStatus/{findProjectTaskId}")]
+        public async Task<ActionResult<bool>> HttpGet(string findProjectTaskId)
         {
             await using (AplicationContext db = new AplicationContext())
             {
                 try
                 {
-                    var editProject = await db.CardProjects.FirstOrDefaultAsync(p => p.id_CardProject_F == new Guid(FindProjectTaskId));
+                    var editProject = await db.CardProjects.FirstOrDefaultAsync(p => p.id_CardProject_F == new Guid(findProjectTaskId));
 
-                    editProject.Status_F = "Закрыт";
+                    editProject.Status_F = "Закрыта";
 
                     await db.SaveChangesAsync();
 

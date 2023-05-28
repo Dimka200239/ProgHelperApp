@@ -264,6 +264,13 @@ namespace ProgHelperApp.ViewModel
                         }
 
                         MessageBox.Show($"Отчеты успешно выгружена! Путь: {directoryPath}");
+
+                        FindFieldProjectTask = null;
+                        TextBlocksProjectTask.Clear();
+                        FindProjectTaskId = null;
+                        TextBlocksTask.Clear();
+                        TextBlocksTask = null;
+                        DescriptionTask = null;
                     }
                     else
                     {

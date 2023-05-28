@@ -14,14 +14,13 @@ using System.Windows.Input;
 
 namespace ProgHelperApp.ViewModel
 {
-    public class ControllerProfileVM : INotifyPropertyChanged
+    public class EmployeeProfileVM : INotifyPropertyChanged
     {
         private readonly Frame MainFrame;
         public event PropertyChangedEventHandler PropertyChanged;
 
         private Page MyProfile;
-        private Page AddEmployeeInTask;
-        private Page FindCompletedTask;
+        private Page AddCardComplete;
 
         private Page _currentPage;
         public Page CurrentPage
@@ -47,14 +46,12 @@ namespace ProgHelperApp.ViewModel
 
         public ICommand ExitFromProfileCommand { get; }
         public ICommand MyProfileCommand { get; }
-        public ICommand AddEmployeeInTaskCommand { get; }
-        public ICommand FindTaskCompleteCommand { get; }
+        public ICommand AddCardCompleteCommand { get; }
 
-        public ControllerProfileVM(Frame MainFrame, Employee employee)
+        public EmployeeProfileVM(Frame MainFrame, Employee employee)
         {
             MyProfile = new MyProfileView(employee);
-            AddEmployeeInTask = new AddEmployeeInTaskView(employee);
-            FindCompletedTask = new FindCompletedTaskView(employee);
+            AddCardComplete = new AddCardCompleteView(employee);
 
             FrameOpacity = 1;
             CurrentPage = null;
@@ -62,8 +59,7 @@ namespace ProgHelperApp.ViewModel
             this.MainFrame = MainFrame;
             ExitFromProfileCommand = new RelayCommand(GoToExitFromProfile);
             MyProfileCommand = new RelayCommand(GoToMyProfile);
-            AddEmployeeInTaskCommand = new RelayCommand(GoToAddEmployeeInTask);
-            FindTaskCompleteCommand = new RelayCommand(GoToFindTaskComplete);
+            AddCardCompleteCommand = new RelayCommand(GoToAddCardComplete);
         }
 
         private void GoToExitFromProfile()
@@ -83,14 +79,9 @@ namespace ProgHelperApp.ViewModel
             SlowOpacity(MyProfile);
         }
         
-        private void GoToAddEmployeeInTask()
+        private void GoToAddCardComplete()
         {
-            SlowOpacity(AddEmployeeInTask);
-        }
-
-        private void GoToFindTaskComplete()
-        {
-            SlowOpacity(FindCompletedTask);
+            SlowOpacity(AddCardComplete);
         }
 
         private async void SlowOpacity(Page page)

@@ -18,6 +18,7 @@ namespace ProgHelperApp.ViewModel
     public class FindCompletedTaskVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private Employee employee;
 
         public ICommand LoadAllCompleteProjectCommand { get; }
         public ICommand CloseCompleteTaskCommand { get; }
@@ -25,8 +26,10 @@ namespace ProgHelperApp.ViewModel
         public ObservableCollection<Button> TextBlocksProjectTask { get; set; }
         public ObservableCollection<Button> TextBlocksTask { get; set; }
 
-        public FindCompletedTaskVM()
+        public FindCompletedTaskVM(Employee employee)
         {
+            this.employee = employee;
+
             LoadAllCompleteProjectCommand = new RelayCommand(LoadAllCompleteProject);
             CloseCompleteTaskCommand = new RelayCommand(CloseCompleteTask);
 
@@ -89,7 +92,7 @@ namespace ProgHelperApp.ViewModel
             {
                 client.BaseAddress = new Uri("https://localhost:44392");
 
-                var response = await client.GetAsync($"/api/editEmployee/FindProjectByName/{FindFieldProjectTask}");
+                var response = await client.GetAsync($"/api/editEmployee/FindProjectByNameAndEmployeeId/{FindFieldProjectTask}/{this.employee.id_Employee_F}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -171,6 +174,8 @@ namespace ProgHelperApp.ViewModel
 
         private async void Click_Button_Task(object sender, RoutedEventArgs e)
         {
+            DescriptionTask = null;
+
             var btn = sender as Button;
             var infoTask = btn.Content.ToString().Split(';');
             FindTaskId = infoTask[0];
@@ -213,6 +218,9 @@ namespace ProgHelperApp.ViewModel
                         if (response.IsSuccessStatusCode)
                         {
                             MessageBox.Show("Задача успешно закрыта");
+
+                            DescriptionTask = null;
+                            FindTaskId = null;
                         }
                         else
                         {

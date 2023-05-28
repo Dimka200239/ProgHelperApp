@@ -18,14 +18,14 @@ using System.Windows.Shapes;
 namespace ProgHelperApp.View
 {
     /// <summary>
-    /// Логика взаимодействия для FindCompletedTaskView.xaml
+    /// Логика взаимодействия для AddCardCompleteView.xaml
     /// </summary>
-    public partial class FindCompletedTaskView : Page
+    public partial class AddCardCompleteView : Page
     {
-        public FindCompletedTaskView(Employee employee)
+        public AddCardCompleteView(Employee employee)
         {
             InitializeComponent();
-            DataContext = new FindCompletedTaskVM(employee);
+            DataContext = new AddCardCompleteVM(employee);
         }
     }
 }
