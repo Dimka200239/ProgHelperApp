@@ -21,6 +21,7 @@ namespace ProgHelperApp.ViewModel
 
         private Page MyProfile;
         private Page AddEmployeeInTask;
+        private Page FindCompletedTask;
 
         private Page _currentPage;
         public Page CurrentPage
@@ -47,11 +48,13 @@ namespace ProgHelperApp.ViewModel
         public ICommand ExitFromProfileCommand { get; }
         public ICommand MyProfileCommand { get; }
         public ICommand AddEmployeeInTaskCommand { get; }
+        public ICommand FindTaskCompleteCommand { get; }
 
         public ControllerProfileVM(Frame MainFrame, Employee employee)
         {
             MyProfile = new MyProfileView(employee);
             AddEmployeeInTask = new AddEmployeeInTaskView(employee);
+            FindCompletedTask = new FindCompletedTaskView();
 
             FrameOpacity = 1;
             CurrentPage = null;
@@ -60,6 +63,7 @@ namespace ProgHelperApp.ViewModel
             ExitFromProfileCommand = new RelayCommand(GoToExitFromProfile);
             MyProfileCommand = new RelayCommand(GoToMyProfile);
             AddEmployeeInTaskCommand = new RelayCommand(GoToAddEmployeeInTask);
+            FindTaskCompleteCommand = new RelayCommand(GoToFindTaskComplete);
         }
 
         private void GoToExitFromProfile()
@@ -82,6 +86,11 @@ namespace ProgHelperApp.ViewModel
         private void GoToAddEmployeeInTask()
         {
             SlowOpacity(AddEmployeeInTask);
+        }
+
+        private void GoToFindTaskComplete()
+        {
+            SlowOpacity(FindCompletedTask);
         }
 
         private async void SlowOpacity(Page page)

@@ -220,6 +220,7 @@
     <Compile Include="ViewModel\FindAndEditProjectVM.cs" />
     <Compile Include="ViewModel\FindAndEditTaskVM.cs" />
     <Compile Include="ViewModel\FindCompletedProjectVM.cs" />
+    <Compile Include="ViewModel\FindCompletedTaskVM.cs" />
     <Compile Include="ViewModel\MyProfileVM.cs" />
     <Compile Include="ViewModel\UserLoginAndRegistrationPageVM.cs" />
     <Compile Include="View\AddEmployeeInTaskView.xaml.cs">
@@ -245,6 +246,9 @@
     </Compile>
     <Compile Include="View\FindCompletedProjectView.xaml.cs">
       <DependentUpon>FindCompletedProjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FindCompletedTaskView.xaml.cs">
+      <DependentUpon>FindCompletedTaskView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MyProfileView.xaml.cs">
       <DependentUpon>MyProfileView.xaml</DependentUpon>
@@ -285,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FindCompletedProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FindCompletedTaskView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
