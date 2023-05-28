@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProgHelperApp.Model;
+using ProgHelperApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace ProgHelperApp.View
         public FindCompletedProjectView()
         {
             InitializeComponent();
+            DataContext = new FindCompletedProjectVM();
         }
     }
 }

@@ -33,6 +33,12 @@ namespace ProgHelperApp.Model
 
         [DisplayName("id_Employee")]
         public Guid id_Employee_F { get; set; }
+
+        [DisplayName("Description")]
+        [Required(ErrorMessage = "Требуется отчет о выполненном задании")]
+        [StringLength(5000, MinimumLength = 30, ErrorMessage = "Отчет должен иметь минимум 30 символов")]
+        public string Description_F { get; set; }
+
         [ForeignKey(nameof(id_Employee_F))]
         public Employee Employee { get; set; }
     }

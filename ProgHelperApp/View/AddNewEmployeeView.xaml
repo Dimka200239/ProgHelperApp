@@ -197,9 +197,11 @@
                 Text="{Binding AddNewPosition}"
                 Grid.Row="8"
                 Grid.Column="1">
-                <TextBlock>Серкетарь</TextBlock>
+                <TextBlock>Секретарь</TextBlock>
                 <TextBlock>Контролер</TextBlock>
-                <TextBlock>Исполнитель</TextBlock>
+                <TextBlock>Исполнитель 1-ой категории</TextBlock>
+                <TextBlock>Исполнитель 2-ой категории</TextBlock>
+                <TextBlock>Исполнитель 3-ей категории</TextBlock>
             </ComboBox>
             <Button Template="{DynamicResource RoundedButtonStyle}"
                 x:Name="UserLoginButton"

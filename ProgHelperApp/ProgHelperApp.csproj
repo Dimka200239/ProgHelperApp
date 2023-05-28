@@ -217,6 +217,7 @@
     <Compile Include="ViewModel\DirectorProfileVM.cs" />
     <Compile Include="ViewModel\FindAndEditProjectVM.cs" />
     <Compile Include="ViewModel\FindAndEditTaskVM.cs" />
+    <Compile Include="ViewModel\FindCompletedProjectVM.cs" />
     <Compile Include="ViewModel\MyProfileVM.cs" />
     <Compile Include="ViewModel\UserLoginAndRegistrationPageVM.cs" />
     <Compile Include="View\AddNewEmployeeView.xaml.cs">

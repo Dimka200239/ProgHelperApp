@@ -69,7 +69,10 @@ namespace ProgHelperApp.ViewModel
                     var result = JsonConvert.DeserializeObject<Employee>(responseContent);
 
                     //MainFrame.Navigate(new DirectorProfileView());
-                    MainFrame.Content = new DirectorProfileView(MainFrame, result);
+                    if (result.Position_F == "Директор" || result.Position_F == "Секретарь")
+                    {
+                        MainFrame.Content = new DirectorProfileView(MainFrame, result);
+                    }
                 }
                 else
                 {

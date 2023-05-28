@@ -151,7 +151,7 @@
                     ScrollViewer.CanContentScroll="True">
                     <StackPanel
                     x:Name="StackPanelFindProject"
-                    Grid.Row="7">
+                    Grid.Row="2">
                         <ItemsControl ItemsSource="{Binding TextBlocksProjectTask}"/>
                     </StackPanel>
                 </ScrollViewer>
