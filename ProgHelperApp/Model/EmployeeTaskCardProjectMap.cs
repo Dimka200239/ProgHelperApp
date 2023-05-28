@@ -29,5 +29,11 @@ namespace ProgHelperApp.Model
         public Guid id_Employee_F { get; set; }
         [ForeignKey(nameof(id_Employee_F))]
         public Employee Employee { get; set; }
+
+        [DisplayName("id_Forwarded_Employee")]
+        [Key]
+        public Guid id_Forwarded_Employee_F { get; set; }
+        [ForeignKey(nameof(id_Forwarded_Employee_F))]
+        public Employee Forwarded_Employee { get; set; }
     }
 }

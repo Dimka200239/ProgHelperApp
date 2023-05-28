@@ -224,106 +224,120 @@ namespace ProgHelperApp.ViewModel
 
         private async void SaveTask()
         {
-            if (MessageBox.Show("Данные о задаче будут обновлены!", "Согласны продолжить?",
-                                            MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            try
             {
-                var updateTask = new Model.Task();
-                updateTask.id_Task_F = new Guid(FindTaskIdTextBoxInputField);
-                updateTask.Title_F = FindTaskTitleTextBoxInputField;
-                updateTask.Description_F = FindTaskDescriptionTextBoxInputField;
-                updateTask.Deadline_F = DateTime.UtcNow.AddDays(int.Parse(FindTaskDeadlineTextBoxInputField)).ToString();
-                updateTask.Status_F = FindTaskStatusTextBoxInputField;
-
-                try
+                if (MessageBox.Show("Данные о задаче будут обновлены!", "Согласны продолжить?",
+                                                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    new Common.DataValidationContext().Validate(updateTask);
+                    var updateTask = new Model.Task();
+                    updateTask.id_Task_F = new Guid(FindTaskIdTextBoxInputField);
+                    updateTask.Title_F = FindTaskTitleTextBoxInputField;
+                    updateTask.Description_F = FindTaskDescriptionTextBoxInputField;
+                    updateTask.Deadline_F = DateTime.UtcNow.AddDays(int.Parse(FindTaskDeadlineTextBoxInputField)).ToString();
+                    updateTask.Status_F = FindTaskStatusTextBoxInputField;
 
-                    using (var client = new HttpClient())
+                    try
                     {
-                        client.BaseAddress = new Uri("https://localhost:44392");
+                        new Common.DataValidationContext().Validate(updateTask);
 
-                        var response = await client.PutAsJsonAsync($"/api/editTaskEmployee/UpdateTaskInfo", updateTask);
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri("https://localhost:44392");
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show("Успешное обновление данных!");
-                            FindTaskIdTextBoxInputField = "";
-                            FindTaskTitleTextBoxInputField = "";
-                            FindTaskDescriptionTextBoxInputField = "";
-                            FindTaskDeadlineTextBoxInputField = "";
-                            FindTaskStatusTextBoxInputField = "";
-                            TextBlocksTask.Clear();
-                        }
-                        else
-                        {
-                            MessageBox.Show("При обновлении данных произошла ошибка...");
+                            var response = await client.PutAsJsonAsync($"/api/editTaskEmployee/UpdateTaskInfo", updateTask);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Успешное обновление данных!");
+                                FindTaskIdTextBoxInputField = "";
+                                FindTaskTitleTextBoxInputField = "";
+                                FindTaskDescriptionTextBoxInputField = "";
+                                FindTaskDeadlineTextBoxInputField = "";
+                                FindTaskStatusTextBoxInputField = "";
+                                TextBlocksTask.Clear();
+                            }
+                            else
+                            {
+                                MessageBox.Show("При обновлении данных произошла ошибка...");
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Вы отменили обновленние данных задачи");
                 }
             }
-            else
+            catch
             {
-                MessageBox.Show("Вы отменили обновленние данных задачи");
+                MessageBox.Show("Проверьте корректно ли заполнены все поля!");
             }
         }
 
         private async void AddTask()
         {
-            if (FindTaskIdTextBoxInputField == "null")
+            try
             {
-                var newTask = new Model.Task();
-                newTask.id_Task_F = Guid.NewGuid();
-                newTask.Title_F = FindTaskTitleTextBoxInputField;
-                newTask.Description_F = FindTaskDescriptionTextBoxInputField;
-                newTask.Deadline_F = DateTime.UtcNow.AddDays(int.Parse(FindTaskDeadlineTextBoxInputField)).ToString();
-                newTask.Status_F = FindTaskStatusTextBoxInputField;
-
-                try
+                if (FindTaskIdTextBoxInputField == "null")
                 {
-                    new Common.DataValidationContext().Validate(newTask);
+                    var newTask = new Model.Task();
+                    newTask.id_Task_F = Guid.NewGuid();
+                    newTask.Title_F = FindTaskTitleTextBoxInputField;
+                    newTask.Description_F = FindTaskDescriptionTextBoxInputField;
+                    newTask.Deadline_F = DateTime.UtcNow.AddDays(int.Parse(FindTaskDeadlineTextBoxInputField)).ToString();
+                    newTask.Status_F = FindTaskStatusTextBoxInputField;
 
-                    using (var client = new HttpClient())
+                    try
                     {
-                        client.BaseAddress = new Uri("https://localhost:44392");
+                        new Common.DataValidationContext().Validate(newTask);
 
-                        var response = await client.PostAsJsonAsync($"/api/editTaskEmployee/AddNewTask/{FindProjectTaskId}", newTask);
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri("https://localhost:44392");
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show("Успешное добавление данных!");
-                            FindTaskIdTextBoxInputField = "";
-                            FindTaskTitleTextBoxInputField = "";
-                            FindTaskDescriptionTextBoxInputField = "";
-                            FindTaskDeadlineTextBoxInputField = "";
-                            FindTaskStatusTextBoxInputField = "";
-                            TextBlocksTask.Clear();
-                        }
-                        else
-                        {
-                            MessageBox.Show("При добавлении данных произошла ошибка...");
+                            var response = await client.PostAsJsonAsync($"/api/editTaskEmployee/AddNewTask/{FindProjectTaskId}", newTask);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Успешное добавление данных!");
+                                FindTaskIdTextBoxInputField = "";
+                                FindTaskTitleTextBoxInputField = "";
+                                FindTaskDescriptionTextBoxInputField = "";
+                                FindTaskDeadlineTextBoxInputField = "";
+                                FindTaskStatusTextBoxInputField = "";
+                                TextBlocksTask.Clear();
+                            }
+                            else
+                            {
+                                MessageBox.Show("При добавлении данных произошла ошибка...");
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else
-            {
-                if (MessageBox.Show("Для добавления поле ID задачи должно иметь значение null!", "Согласны продолжить?",
-                                            MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    FindTaskIdTextBoxInputField = "null";
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Вы отменили добавление новой задачи");
+                    if (MessageBox.Show("Для добавления поле ID задачи должно иметь значение null!", "Согласны продолжить?",
+                                                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        FindTaskIdTextBoxInputField = "null";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы отменили добавление новой задачи");
+                    }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте корректно ли заполнены все поля!");
             }
         }
 

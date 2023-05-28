@@ -133,56 +133,63 @@ namespace ProgHelperApp.ViewModel
 
         private async void SaveProject()
         {
-            var cardProject = new CardProject();
-            cardProject.id_CardProject_F = new Guid(FindProjectId);
-            cardProject.Title_F = FindProjectTitle;
-            cardProject.Description_F = FindProjectDescription;
-            cardProject.DateOfBegining_F = FindProjectDateOfBegining;
-            cardProject.Status_F = FindProjectStatus;
-            cardProject.id_Employee_F = new Guid(FindProjectManagerField);
-
-            new Common.DataValidationContext().Validate(cardProject);
-
-            var cardProjectEmployeeMap = new CardProjectEmployeeMap();
-            cardProjectEmployeeMap.id_CardProject_F = cardProject.id_CardProject_F;
-            cardProjectEmployeeMap.id_Employee_F = cardProject.id_Employee_F;
-
-            new Common.DataValidationContext().Validate(cardProjectEmployeeMap);
-
-            var oldCardProjectEmployeeMap = new CardProjectEmployeeMap();
-            oldCardProjectEmployeeMap.id_CardProject_F = cardProject.id_CardProject_F;
-            oldCardProjectEmployeeMap.id_Employee_F = new Guid(LastIdController);
-
-            new Common.DataValidationContext().Validate(oldCardProjectEmployeeMap);
-
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri("https://localhost:44392");
+                var cardProject = new CardProject();
+                cardProject.id_CardProject_F = new Guid(FindProjectId);
+                cardProject.Title_F = FindProjectTitle;
+                cardProject.Description_F = FindProjectDescription;
+                cardProject.DateOfBegining_F = FindProjectDateOfBegining;
+                cardProject.Status_F = FindProjectStatus;
+                cardProject.id_Employee_F = new Guid(FindProjectManagerField);
 
-                var firstResponse = await client.PutAsJsonAsync($"/api/editEmployee/UpdateInfoAboutProject", cardProject);
-                var secondResponse = await client.DeleteAsync($"/api/editEmployee/DeleteInfoAboutProjectEmployeeMap/{oldCardProjectEmployeeMap.id_CardProject_F}/{oldCardProjectEmployeeMap.id_Employee_F}");
-                var thirdResponse = await client.PostAsJsonAsync($"/api/editEmployee/UpdateInfoAboutProjectEmployeeMap", cardProjectEmployeeMap);
+                new Common.DataValidationContext().Validate(cardProject);
 
-                if (firstResponse.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode && thirdResponse.IsSuccessStatusCode)
+                var cardProjectEmployeeMap = new CardProjectEmployeeMap();
+                cardProjectEmployeeMap.id_CardProject_F = cardProject.id_CardProject_F;
+                cardProjectEmployeeMap.id_Employee_F = cardProject.id_Employee_F;
+
+                new Common.DataValidationContext().Validate(cardProjectEmployeeMap);
+
+                var oldCardProjectEmployeeMap = new CardProjectEmployeeMap();
+                oldCardProjectEmployeeMap.id_CardProject_F = cardProject.id_CardProject_F;
+                oldCardProjectEmployeeMap.id_Employee_F = new Guid(LastIdController);
+
+                new Common.DataValidationContext().Validate(oldCardProjectEmployeeMap);
+
+                using (var client = new HttpClient())
                 {
-                    MessageBox.Show("Успешное обновление");
-                    FindFieldProject = "";
-                    FindProjectId = "";
-                    FindProjectTitle = "";
-                    FindProjectDescription = "";
-                    FindProjectDateOfBegining = "";
-                    FindProjectStatus = "";
-                    FindProjectManager = "";
-                    FindProjectManagerField = "";
-                    LastIdController = "last";
+                    client.BaseAddress = new Uri("https://localhost:44392");
 
-                    TextBlocksProject.Clear();
-                    TextBlocksEmployee.Clear();
+                    var firstResponse = await client.PutAsJsonAsync($"/api/editEmployee/UpdateInfoAboutProject", cardProject);
+                    var secondResponse = await client.DeleteAsync($"/api/editEmployee/DeleteInfoAboutProjectEmployeeMap/{oldCardProjectEmployeeMap.id_CardProject_F}/{oldCardProjectEmployeeMap.id_Employee_F}");
+                    var thirdResponse = await client.PostAsJsonAsync($"/api/editEmployee/UpdateInfoAboutProjectEmployeeMap", cardProjectEmployeeMap);
+
+                    if (firstResponse.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode && thirdResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Успешное обновление");
+                        FindFieldProject = "";
+                        FindProjectId = "";
+                        FindProjectTitle = "";
+                        FindProjectDescription = "";
+                        FindProjectDateOfBegining = "";
+                        FindProjectStatus = "";
+                        FindProjectManager = "";
+                        FindProjectManagerField = "";
+                        LastIdController = "last";
+
+                        TextBlocksProject.Clear();
+                        TextBlocksEmployee.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("При обновлении произошла ошибка...");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("При обновлении произошла ошибка...");
-                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте корректно ли заполнены все поля!");
             }
         }
 

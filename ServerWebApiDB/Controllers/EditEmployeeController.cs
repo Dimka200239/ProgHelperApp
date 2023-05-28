@@ -21,7 +21,30 @@ namespace ServerWebApiDB.Controllers
             {
                 try
                 {
-                    var projects = db.CardProjects.Where(p => EF.Functions.Like(p.Title_F, "%" + TitleProject + "%"));
+                    var projects = db.CardProjects.Where(p => EF.Functions.Like(p.Title_F, "%" + TitleProject + "%") && p.Status_F == "Открыта");
+                    result = projects.ToListAsync().Result;
+                }
+                catch (Exception ex)
+                {
+                    result = null;
+                }
+            }
+
+            return result;
+        }
+
+        [HttpGet("FindProjectByNameAndEmployeeId/{TitleProject}/{employeeId}")]
+        public async Task<ActionResult<List<Model.CardProject>>> Get(string TitleProject, string employeeId)
+        {
+            List<Model.CardProject> result = null;
+
+            await using (AplicationContext db = new AplicationContext())
+            {
+                try
+                {
+                    var projects = db.CardProjects.Where(p => EF.Functions.Like(p.Title_F, "%" + TitleProject + "%")
+                                                      && p.id_Employee_F == new Guid(employeeId)
+                                                      && p.Status_F == "Открыта");
                     result = projects.ToListAsync().Result;
                 }
                 catch (Exception ex)

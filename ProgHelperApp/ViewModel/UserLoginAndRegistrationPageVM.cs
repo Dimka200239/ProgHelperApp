@@ -73,6 +73,16 @@ namespace ProgHelperApp.ViewModel
                     {
                         MainFrame.Content = new DirectorProfileView(MainFrame, result);
                     }
+                    else if (result.Position_F == "Контролер")
+                    {
+                        MainFrame.Content = new ControllerProfileView(MainFrame, result);
+                    }
+                    else if (result.Position_F == "Исполнитель 1-ой категории" ||
+                             result.Position_F == "Исполнитель 2-ой категории" ||
+                             result.Position_F == "Исполнитель 3-ой категории")
+                    {
+
+                    }
                 }
                 else
                 {
