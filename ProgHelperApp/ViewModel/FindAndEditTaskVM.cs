@@ -325,7 +325,7 @@ namespace ProgHelperApp.ViewModel
                             }
                             else
                             {
-                                MessageBox.Show("При добавлении данных произошла ошибка...");
+                                MessageBox.Show("При добавлении данных произошла ошибка");
                             }
                         }
                     }
@@ -340,6 +340,7 @@ namespace ProgHelperApp.ViewModel
                                                 MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                     {
                         FindTaskIdTextBoxInputField = "null";
+                        FindTaskStatusTextBoxInputField = "Открыта";
                     }
                     else
                     {
@@ -353,16 +354,50 @@ namespace ProgHelperApp.ViewModel
             }
         }
 
-        private void DeleteTask()
+        private async void DeleteTask()
         {
-            if (MessageBox.Show("(В РАЗРАБОТКЕ) Данная задача будет удалена из проекта!", "Согласны продолжить?",
+            if (MessageBox.Show("Данная задача будет удалена из проекта!", "Согласны продолжить?",
                                             MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
-                MessageBox.Show("(В РАЗРАБОТКЕ) Вы отменили удаление данной задачи");
+                MessageBox.Show("Вы отменили удаление данной задачи");
             }
             else
             {
-                MessageBox.Show("(В РАЗРАБОТКЕ) Задача удалена");
+                try
+                {
+                    if (FindTaskIdTextBoxInputField != null && FindTaskIdTextBoxInputField != "")
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri("https://localhost:44392");
+
+                            var response = await client.DeleteAsync($"/api/addEmployeeInTask/deleteTaskById/{FindTaskIdTextBoxInputField}");
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Задача удалена");
+                                TextBlocksTask.Clear();
+                                FindTaskIdTextBoxInputField = null;
+                                FindTaskTitleTextBoxInputField = null;
+                                FindTaskDescriptionTextBoxInputField = null;
+                                FindTaskDeadlineTextBoxInputField = null;
+                                FindTaskStatusTextBoxInputField = null;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ошибка при обновлении данных");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Поле ID задачи пустое!");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка при обновлении данных");
+                }
             }
         }
     }

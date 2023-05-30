@@ -167,5 +167,33 @@ namespace ServerWebApiDB.Controllers
                 }
             }
         }
+
+        [HttpDelete("deleteTaskById/{idTask}")]
+        public async Task<ActionResult<bool>> Delete(string idTask)
+        {
+            await using (AplicationContext db = new AplicationContext())
+            {
+                try
+                {
+                    var oldEmployeeTaskCardProjectMaps = db.EmployeeTaskCardProjectMaps.Where(p => p.id_Task_F == new Guid(idTask));
+                    db.EmployeeTaskCardProjectMaps.RemoveRange(oldEmployeeTaskCardProjectMaps);
+                    await db.SaveChangesAsync();
+
+                    var oldTaskCardProject = db.TaskCardProjectMaps.Where(p => p.id_Task_F == new Guid(idTask));
+                    db.TaskCardProjectMaps.RemoveRange(oldTaskCardProject);
+                    await db.SaveChangesAsync();
+
+                    var oldTask = db.Tasks.Where(p => p.id_Task_F == new Guid(idTask));
+                    db.Tasks.RemoveRange(oldTask);
+                    await db.SaveChangesAsync();
+
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
+            }
+        }
     }
 }

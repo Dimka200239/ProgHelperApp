@@ -279,6 +279,7 @@ namespace ProgHelperApp.ViewModel
                         FindFieldTaskManager = "";
                         TextBlocks.Clear();
                         TextBlocksTask.Clear();
+                        newTasks.Clear();
                     }
                     else
                     {
