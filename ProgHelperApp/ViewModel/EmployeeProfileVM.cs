@@ -21,6 +21,7 @@ namespace ProgHelperApp.ViewModel
 
         private Page MyProfile;
         private Page AddCardComplete;
+        private Page ForwardingOrders;
 
         private Page _currentPage;
         public Page CurrentPage
@@ -47,11 +48,13 @@ namespace ProgHelperApp.ViewModel
         public ICommand ExitFromProfileCommand { get; }
         public ICommand MyProfileCommand { get; }
         public ICommand AddCardCompleteCommand { get; }
+        public ICommand ForwardingOrdersCommand { get; }
 
         public EmployeeProfileVM(Frame MainFrame, Employee employee)
         {
             MyProfile = new MyProfileView(employee);
             AddCardComplete = new AddCardCompleteView(employee);
+            ForwardingOrders = new ForwardingOrdersView(employee);
 
             FrameOpacity = 1;
             CurrentPage = null;
@@ -60,6 +63,7 @@ namespace ProgHelperApp.ViewModel
             ExitFromProfileCommand = new RelayCommand(GoToExitFromProfile);
             MyProfileCommand = new RelayCommand(GoToMyProfile);
             AddCardCompleteCommand = new RelayCommand(GoToAddCardComplete);
+            ForwardingOrdersCommand = new RelayCommand(GoToForwardingOrders);
         }
 
         private void GoToExitFromProfile()
@@ -82,6 +86,11 @@ namespace ProgHelperApp.ViewModel
         private void GoToAddCardComplete()
         {
             SlowOpacity(AddCardComplete);
+        }
+
+        private void GoToForwardingOrders()
+        {
+            SlowOpacity(ForwardingOrders);
         }
 
         private async void SlowOpacity(Page page)
