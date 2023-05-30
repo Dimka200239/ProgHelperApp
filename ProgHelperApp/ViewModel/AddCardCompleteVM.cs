@@ -112,19 +112,34 @@ namespace ProgHelperApp.ViewModel
                     {
                         foreach (EmployeeTaskCardProjectMap el in result)
                         {
-                            var newButton = new Button
+                            var secondResponse = await client.GetAsync($"/api/employeeTask/GetTaskById/{el.id_Task_F}/{"true"}");
+
+                            string secondResponseContent = await secondResponse.Content.ReadAsStringAsync();
+                            var secondResult = JsonConvert.DeserializeObject<Model.Task>(secondResponseContent);
+
+                            if (secondResult.Status_F == "Открыта")
                             {
-                                Content = el.id_CardProject_F + ";" +
-                                          el.id_Task_F + ";" +
-                                          el.id_Employee_F + ";" +
-                                          el.id_Forwarded_Employee_F + ";"
-                            };
+                                var newButton = new Button
+                                {
+                                    Content = secondResult.Title_F + ";" +
+                                              el.id_CardProject_F + ";" +
+                                              el.id_Task_F + ";" +
+                                              el.id_Employee_F + ";" +
+                                              el.id_Forwarded_Employee_F + ";"
+                                };
 
-                            newButton.MouseDoubleClick += MouseDoubleClick_Button_Task;
+                                newButton.Click += MouseDoubleClick_Button_Task;
 
-                            TextBlocksTask.Add(newButton);
+                                TextBlocksTask.Add(newButton);
+                            }
                         }
                     }
+
+                    FindProjectTaskId = null;
+                    FindTaskId = null;
+                    DescriptionTask = null;
+                    DescriptionProjectTask = null;
+                    TitleProject = null;
                 }
                 else
                 {
@@ -142,7 +157,7 @@ namespace ProgHelperApp.ViewModel
             {
                 client.BaseAddress = new Uri("https://localhost:44392");
 
-                var response = await client.GetAsync($"/api/employeeTask/GetTaskById/{infoTask[1]}/{"true"}");
+                var response = await client.GetAsync($"/api/employeeTask/GetTaskById/{infoTask[2]}/{"true"}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -150,7 +165,7 @@ namespace ProgHelperApp.ViewModel
                     var result = JsonConvert.DeserializeObject<Model.Task>(responseContent);
 
                     FindTaskId = result.id_Task_F.ToString();
-                    FindProjectTaskId = infoTask[0];
+                    FindProjectTaskId = infoTask[1];
                     TitleProject = result.Title_F;
                     DescriptionProjectTask = result.Description_F;
                 }
@@ -204,11 +219,11 @@ namespace ProgHelperApp.ViewModel
                             MessageBox.Show("Карта выполенния уже создана для этой задачи!");
                         }
 
-                        FindTaskId = "";
-                        FindProjectTaskId = "";
-                        TitleProject = "";
-                        DescriptionProjectTask = "";
-                        DescriptionTask = "";
+                        FindProjectTaskId = null;
+                        FindTaskId = null;
+                        DescriptionTask = null;
+                        DescriptionProjectTask = null;
+                        TitleProject = null;
                     }
                     else
                     {

@@ -142,11 +142,13 @@
                 <ScrollViewer
                     ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                     ScrollViewer.CanContentScroll="True">
+                    <ItemsControl>
                     <StackPanel
                     x:Name="StackPanelFindTask"
                     Grid.Row="2">
                         <ItemsControl ItemsSource="{Binding TextBlocksTask}"/>
                     </StackPanel>
+                    </ItemsControl >
                 </ScrollViewer>
             </Border>
             <TextBlock

@@ -125,6 +125,13 @@ namespace ProgHelperApp.ViewModel
         private async void FindProjectTaskByName()
         {
             TextBlocksProjectTask.Clear();
+            TextBlocksTask.Clear();
+            FindProjectTaskId = null;
+            FindTaskIdTextBoxInputField = null;
+            FindTaskTitleTextBoxInputField = null;
+            FindTaskDescriptionTextBoxInputField = null;
+            FindTaskDeadlineTextBoxInputField = null;
+            FindTaskStatusTextBoxInputField = null;
 
             using (var client = new HttpClient())
             {
@@ -172,6 +179,11 @@ namespace ProgHelperApp.ViewModel
             FindProjectTaskId = infoProject[0];
 
             TextBlocksTask.Clear();
+            FindTaskIdTextBoxInputField = null;
+            FindTaskTitleTextBoxInputField = null;
+            FindTaskDescriptionTextBoxInputField = null;
+            FindTaskDeadlineTextBoxInputField = null;
+            FindTaskStatusTextBoxInputField = null;
 
             using (var client = new HttpClient())
             {
@@ -249,12 +261,12 @@ namespace ProgHelperApp.ViewModel
                             if (response.IsSuccessStatusCode)
                             {
                                 MessageBox.Show("Успешное обновление данных!");
-                                FindTaskIdTextBoxInputField = "";
-                                FindTaskTitleTextBoxInputField = "";
-                                FindTaskDescriptionTextBoxInputField = "";
-                                FindTaskDeadlineTextBoxInputField = "";
-                                FindTaskStatusTextBoxInputField = "";
                                 TextBlocksTask.Clear();
+                                FindTaskIdTextBoxInputField = null;
+                                FindTaskTitleTextBoxInputField = null;
+                                FindTaskDescriptionTextBoxInputField = null;
+                                FindTaskDeadlineTextBoxInputField = null;
+                                FindTaskStatusTextBoxInputField = null;
                             }
                             else
                             {
@@ -304,12 +316,12 @@ namespace ProgHelperApp.ViewModel
                             if (response.IsSuccessStatusCode)
                             {
                                 MessageBox.Show("Успешное добавление данных!");
-                                FindTaskIdTextBoxInputField = "";
-                                FindTaskTitleTextBoxInputField = "";
-                                FindTaskDescriptionTextBoxInputField = "";
-                                FindTaskDeadlineTextBoxInputField = "";
-                                FindTaskStatusTextBoxInputField = "";
                                 TextBlocksTask.Clear();
+                                FindTaskIdTextBoxInputField = null;
+                                FindTaskTitleTextBoxInputField = null;
+                                FindTaskDescriptionTextBoxInputField = null;
+                                FindTaskDeadlineTextBoxInputField = null;
+                                FindTaskStatusTextBoxInputField = null;
                             }
                             else
                             {

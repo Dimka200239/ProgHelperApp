@@ -168,18 +168,19 @@ namespace ProgHelperApp.ViewModel
                     if (firstResponse.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode && thirdResponse.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Успешное обновление");
-                        FindFieldProject = "";
-                        FindProjectId = "";
-                        FindProjectTitle = "";
-                        FindProjectDescription = "";
-                        FindProjectDateOfBegining = "";
-                        FindProjectStatus = "";
-                        FindProjectManager = "";
-                        FindProjectManagerField = "";
+
                         LastIdController = "last";
 
                         TextBlocksProject.Clear();
                         TextBlocksEmployee.Clear();
+                        FindFieldProject = null;
+                        FindProjectId = null;
+                        FindProjectTitle = null;
+                        FindProjectDescription = null;
+                        FindProjectDateOfBegining = null;
+                        FindProjectStatus = null;
+                        FindProjectManager = null;
+                        FindProjectManagerField = null;
                     }
                     else
                     {
@@ -196,6 +197,14 @@ namespace ProgHelperApp.ViewModel
         private async void FindProjectByName()
         {
             TextBlocksProject.Clear();
+            TextBlocksEmployee.Clear();
+            FindProjectId = null;
+            FindProjectTitle = null;
+            FindProjectDescription = null;
+            FindProjectDateOfBegining = null;
+            FindProjectStatus = null;
+            FindProjectManager = null;
+            FindProjectManagerField = null;
 
             using (var client = new HttpClient())
             {

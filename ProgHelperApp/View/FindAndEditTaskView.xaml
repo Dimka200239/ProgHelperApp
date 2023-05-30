@@ -146,15 +146,17 @@
                 Grid.Row="2"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <ScrollViewer
+                <ItemsControl>
+                    <ScrollViewer
                     ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                     ScrollViewer.CanContentScroll="True">
-                    <StackPanel
+                        <StackPanel
                     x:Name="StackPanelFindProject"
                     Grid.Row="2">
-                        <ItemsControl ItemsSource="{Binding TextBlocksProjectTask}"/>
-                    </StackPanel>
-                </ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding TextBlocksProjectTask}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ItemsControl>
             </Border>
             <TextBlock
                 x:Name="FindProjectTaskIdFeild"
@@ -184,15 +186,17 @@
                 Grid.Row="7"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <ScrollViewer
+                <ItemsControl>
+                    <ScrollViewer
                     ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                     ScrollViewer.CanContentScroll="True">
-                    <StackPanel
+                        <StackPanel
                     x:Name="StackPanelFindTask"
                     Grid.Row="7">
-                        <ItemsControl ItemsSource="{Binding TextBlocksTask}"/>
-                    </StackPanel>
-                </ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding TextBlocksTask}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ItemsControl>
             </Border>
             <TextBlock
                 x:Name="FindTaskIdFeild"

@@ -132,6 +132,14 @@ namespace ProgHelperApp.ViewModel
         private async void FindProjectTaskByName()
         {
             TextBlocksProjectTask.Clear();
+            TextBlocksTask.Clear();
+            TextBlocksFindEmployee.Clear();
+            TextBlocksEmployee.Clear();
+            FindProjectTaskId = null;
+            FindTaskIdTextBoxInputField = null;
+            FindTaskTitleTextBoxInputField = null;
+            FindTaskStatusTextBoxInputField = null;
+            FindFieldEmployee = null;
 
             using (var client = new HttpClient())
             {
@@ -179,6 +187,12 @@ namespace ProgHelperApp.ViewModel
             FindProjectTaskId = infoProject[0];
 
             TextBlocksTask.Clear();
+            TextBlocksFindEmployee.Clear();
+            TextBlocksEmployee.Clear();
+            FindTaskIdTextBoxInputField = null;
+            FindTaskTitleTextBoxInputField = null;
+            FindTaskStatusTextBoxInputField = null;
+            FindFieldEmployee = null;
 
             using (var client = new HttpClient())
             {
@@ -219,7 +233,12 @@ namespace ProgHelperApp.ViewModel
 
         private async void Click_Button_Task(object sender, RoutedEventArgs e)
         {
+            TextBlocksFindEmployee.Clear();
             TextBlocksEmployee.Clear();
+            FindTaskIdTextBoxInputField = null;
+            FindTaskTitleTextBoxInputField = null;
+            FindTaskStatusTextBoxInputField = null;
+            FindFieldEmployee = null;
 
             var btn = sender as Button;
             var infoProject = btn.Content.ToString().Split(';');
@@ -370,12 +389,12 @@ namespace ProgHelperApp.ViewModel
 
                     var response = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeTaskCardProject", employeeTaskCardProject);
 
-                    var employeeCardProject = new Model.CardProjectEmployeeMap();
-                    employeeCardProject.id_CardProject_F = new Guid(FindProjectTaskId);
-                    employeeCardProject.id_Employee_F = new Guid(infoProject[0]);
-                    var secondResponse = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeCardProject", employeeCardProject);
+                    //var employeeCardProject = new Model.CardProjectEmployeeMap();
+                    //employeeCardProject.id_CardProject_F = new Guid(FindProjectTaskId);
+                    //employeeCardProject.id_Employee_F = new Guid(infoProject[0]);
+                    //var secondResponse = await client.PostAsJsonAsync($"/api/addEmployeeInTask/addEmployeeCardProject", employeeCardProject);
 
-                    if (response.IsSuccessStatusCode && secondResponse.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode) // && secondResponse.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"{infoProject[1]} {infoProject[2]} {infoProject[3]} успешно приклеплен к задаче!");
 

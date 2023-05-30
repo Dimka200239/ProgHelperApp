@@ -145,11 +145,13 @@
                 Grid.Row="2"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <StackPanel
+                <ItemsControl>
+                    <StackPanel
                     x:Name="StackPanelFindProject"
                     Grid.Row="7">
-                    <ItemsControl ItemsSource="{Binding TextBlocksProject}"/>
-                </StackPanel>
+                        <ItemsControl ItemsSource="{Binding TextBlocksProject}"/>
+                    </StackPanel>
+                </ItemsControl>
             </Border>
             <TextBlock
                 x:Name="FindProjectIdFeild"
@@ -244,11 +246,13 @@
                 Grid.Row="11"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <StackPanel
+                <ItemsControl>
+                    <StackPanel
                     x:Name="StackPanelEmployee"
                     Grid.Row="7">
-                    <ItemsControl ItemsSource="{Binding TextBlocksEmployee}"/>
-                </StackPanel>
+                        <ItemsControl ItemsSource="{Binding TextBlocksEmployee}"/>
+                    </StackPanel>
+                </ItemsControl>
             </Border>
             <TextBox
                 x:Name="ProjectIdManagerTextBoxInputField"

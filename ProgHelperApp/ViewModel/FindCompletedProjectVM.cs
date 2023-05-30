@@ -42,6 +42,9 @@ namespace ProgHelperApp.ViewModel
         private string _descriptionTask;
         private string _findFieldProjectTask;
 
+        private string fileNameProject = null;
+        private List<string> fileNameTask = new List<string>();
+
         public string FindProjectTaskId
         {
             get { return _findProjectTaskId; }
@@ -85,6 +88,10 @@ namespace ProgHelperApp.ViewModel
         private async void LoadAllCompleteProject()
         {
             TextBlocksProjectTask.Clear();
+            TextBlocksTask.Clear();
+            FindProjectTaskId = null;
+            FindTaskId = null;
+            DescriptionTask = null;
 
             using (var client = new HttpClient())
             {
@@ -131,7 +138,14 @@ namespace ProgHelperApp.ViewModel
             var infoProject = btn.Content.ToString().Split(';');
             FindProjectTaskId = infoProject[0];
 
+            fileNameProject = null;
+            fileNameTask = new List<string>();
+
+            fileNameProject = infoProject[1];
+
             TextBlocksTask.Clear();
+            FindTaskId = null;
+            DescriptionTask = null;
 
             using (var client = new HttpClient())
             {
@@ -148,6 +162,8 @@ namespace ProgHelperApp.ViewModel
                     {
                         foreach (Model.Task project in result)
                         {
+                            fileNameTask.Add(project.Title_F);
+
                             var newButton = new Button
                             {
                                 Content = project.id_Task_F + ";" +
@@ -174,6 +190,8 @@ namespace ProgHelperApp.ViewModel
             var btn = sender as Button;
             var infoTask = btn.Content.ToString().Split(';');
             FindTaskId = infoTask[0];
+
+            DescriptionTask = null;
 
             using (var client = new HttpClient())
             {
@@ -239,13 +257,14 @@ namespace ProgHelperApp.ViewModel
                             Directory.CreateDirectory(mainDirectoryPath);
                         }
 
-                        string directoryPath = @"C:\reports\" + FindProjectTaskId;
+                        string directoryPath = @"C:\reports\" + fileNameProject;
 
                         if (!Directory.Exists(directoryPath))
                         {
                             Directory.CreateDirectory(directoryPath);
                         }
 
+                        var index = 0;
                         foreach (var el in TextBlocksTask)
                         {
                             var idTask = el.Content.ToString().Split(';')[0];
@@ -257,9 +276,11 @@ namespace ProgHelperApp.ViewModel
                                 string responseContent = await secondResponse.Content.ReadAsStringAsync();
                                 var result = JsonConvert.DeserializeObject<Model.CardComplete>(responseContent);
 
-                                string filePath = Path.Combine(directoryPath, $"{result.id_Task_F}.txt");
+                                string filePath = Path.Combine(directoryPath, $"{fileNameTask[index]}.txt");
 
                                 File.WriteAllText(filePath, "Дата выполенния: " + result.DateOfEnding_F + "\n\n" + result.Description_F);
+
+                                index++;
                             }
                         }
 

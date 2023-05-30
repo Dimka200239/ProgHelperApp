@@ -87,6 +87,10 @@ namespace ProgHelperApp.ViewModel
         private async void LoadAllCompleteProject()
         {
             TextBlocksProjectTask.Clear();
+            TextBlocksTask.Clear();
+            FindProjectTaskId = null;
+            FindTaskId = null;
+            DescriptionTask = null;
 
             using (var client = new HttpClient())
             {
@@ -134,6 +138,8 @@ namespace ProgHelperApp.ViewModel
             FindProjectTaskId = infoProject[0];
 
             TextBlocksTask.Clear();
+            FindTaskId = null;
+            DescriptionTask = null;
 
             using (var client = new HttpClient())
             {

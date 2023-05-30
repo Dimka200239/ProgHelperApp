@@ -208,11 +208,13 @@
                 Grid.Row="7"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <StackPanel
+                <ItemsControl>
+                    <StackPanel
                     x:Name="StackPanelEmployee"
                     Grid.Row="7">
-                    <ItemsControl ItemsSource="{Binding TextBlocks}"/>
-                </StackPanel>
+                        <ItemsControl ItemsSource="{Binding TextBlocks}"/>
+                    </StackPanel>
+                </ItemsControl>
             </Border>
             <TextBox
                 x:Name="TaskIdManagerTextBoxInputField"
@@ -295,11 +297,13 @@
                 Grid.Row="16"
                 Grid.RowSpan="2"
                 Style="{StaticResource BoardInteraction}">
-                <StackPanel
+                <ItemsControl>
+                    <StackPanel
                     x:Name="StackPanelAddTask"
                     Grid.Row="16">
-                    <ItemsControl ItemsSource="{Binding TextBlocksTask}"/>
-                </StackPanel>
+                        <ItemsControl ItemsSource="{Binding TextBlocksTask}"/>
+                    </StackPanel>
+                </ItemsControl>
             </Border>
             <Button Template="{DynamicResource RoundedButtonStyle}"
                 x:Name="AddNewTaskButton"

@@ -276,6 +276,7 @@ namespace ProgHelperApp.ViewModel
                         AddNewTaskDateOfBegining = "";
                         AddNewTaskStatus = "";
                         AddNewTaskIdManager = "";
+                        FindFieldTaskManager = "";
                         TextBlocks.Clear();
                         TextBlocksTask.Clear();
                     }
