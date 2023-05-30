@@ -145,6 +145,7 @@ namespace ProgHelperApp.ViewModel
                         }
                     }
 
+                    TextBlocksFindEmployee.Clear();
                     FindTaskId = null;
                     FindProjectTaskId = null;
                     FindFieldEmployee = null;
@@ -273,6 +274,13 @@ namespace ProgHelperApp.ViewModel
                         if (response.IsSuccessStatusCode)
                         {
                             MessageBox.Show("Задача успешно переадресована");
+
+                            TextBlocksTask.Clear();
+                            TextBlocksFindEmployee.Clear();
+                            FindTaskId = null;
+                            FindProjectTaskId = null;
+                            FindFieldEmployee = null;
+                            IdEmployee = null;
                         }
                         else
                         {
